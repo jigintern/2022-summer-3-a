@@ -11,13 +11,21 @@
 
   <script type="module">
     window.onload = async (event) => {
+        navigator.geolocation.getCurrentPosition((position)=> {
+          //緯度
+          let lat = position.coords.latitude;
+          //経度
+          let lng = position.coords.longitude;
+          console.log("lat",lat)
+      });
+      console.log()
         var testjson = JSON.stringify({
         position: {
             "lat":1.2,"lng":1.2
         },
         finished:false,
         uid:"testuid",
-        status:"finish",
+        status:"running",
         time:1000
         })
         await fetch("/position", {
@@ -28,7 +36,8 @@
 
             body: testjson
 
-            });
+        });
+        
             document.querySelector("#welcomeMessage").innerText = "test";
     };
   </script>
