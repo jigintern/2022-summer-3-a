@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1 id="welcomeMessage"></h1>
+
+  <script type="module">
+    window.onload = async (event) => {
+        var testjson = JSON.stringify({
+        position: {
+            "lat":1.2,"lng":1.2
+        },
+        finished:false,
+        uid:"testuid",
+        status:"finish",
+        time:1000
+        })
+        await fetch("/position", {
+
+            method: "POST",
+
+            headers: { "Content-Type": "application/json" },
+
+            body: testjson
+
+            });
+            document.querySelector("#welcomeMessage").innerText = "test";
+    };
+  </script>
+</body>
+
+</html>

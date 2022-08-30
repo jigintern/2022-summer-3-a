@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 import getUser from "./getuser.js"
+import postPosition from "./postposition.js"
 serve(async (req) => {
   const url = new URL(req.url)
   const pathname = url.pathname;
