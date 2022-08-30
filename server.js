@@ -11,8 +11,9 @@ serve(async (req) => {
   }
   if(req.method === "GET" && pathname === "/user"){
     console.log(url.searchParams.get("uid"))
-    const res = getUser(url.searchParams.get("uid"))
+    const res = await getUser(url.searchParams.get("uid"))
     //const res = {hello:"world"}
+    console.log(res)
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
@@ -20,7 +21,7 @@ serve(async (req) => {
     });
   }else if(req.method === "POST" && pathname === "/user"){
     const reqJson = await req.json()
-    const res = updateUser(reqJson)
+    const res = await updateUser(reqJson)
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
@@ -28,21 +29,29 @@ serve(async (req) => {
     });
   }else if(req.method === "POST" && pathname === "/position"){
     const reqJson = await req.json()
-    const res = postPosition(reqJson)
+    const res = await postPosition(reqJson)
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
       }
     });
   }else if(req.method === "GET" && pathname === "/ranking"){
-    const res = getUsers(url.searchParams.get("uid"),url.searchParams.get("key"))
+    const res = await getUsers(url.searchParams.get("uid"),url.searchParams.get("key"))
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
       }
     });
   }else if(req.method === "GET" && pathname === "/liquidation"){
-    const res = liquidate(url.searchParams.get("uid"))
+    const res = await liquidate(url.searchParams.get("uid"))
+    return new Response(JSON.stringify(res), {
+      headers: {
+          "content-type": "application/json"
+      }
+    });
+  }else if(req.method === "POST" && pathname === "/bet"){
+    const reqJson = await req.json()
+    const res = await betUser(reqJson)
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
