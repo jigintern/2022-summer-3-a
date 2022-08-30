@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.151.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
-
+import getUser from "./getuser.js"
 serve(async (req) => {
   const url = new URL(req.url)
   const pathname = url.pathname;
@@ -10,8 +10,8 @@ serve(async (req) => {
   }
   if(req.method === "GET" && pathname === "/user"){
     console.log(url.searchParams.get("uid"))
-    //const res = getUser(url.searchParams.get("uid"))
-    const res = {hello:"world"}
+    const res = getUser(url.searchParams.get("uid"))
+    //const res = {hello:"world"}
     return new Response(JSON.stringify(res), {
       headers: {
           "content-type": "application/json"
