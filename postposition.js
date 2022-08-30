@@ -1,25 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import {
-getDocs,
 getDoc,
-getFirestore,
 setDoc,
-collection, doc,addDoc,query,where,orderBy,limit,Timestamp,serverTimestamp
+doc,Timestamp
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore.js";
-const firebaseConfig = {
-    apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
-    authDomain: "running-ranking.firebaseapp.com",
-    projectId: "running-ranking",
-    storageBucket: "running-ranking.appspot.com",
-    messagingSenderId: "660141883268",
-    appId: "1:660141883268:web:fb085fe07d779f859da7d1",
-    measurementId: "G-MQ2CVEQL0X"
-  };
+import db from "./firebase.js";
 
 const postPosition  = async(req) => {
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
     let distance;
     let uid = await req.uid;
     let lat = await req.position.lat * Math.PI/180; //緯度
