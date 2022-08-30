@@ -18,7 +18,7 @@ const postPosition  = async(req) => {
     let positions; //
     let starttime;
     const distancesRef = doc(db,"distances",uid);
-    if(status != "start")
+    if(status !== "start")
     {
         await getDoc(distancesRef).then(doc => {
               distance = doc.data()["distance"];
@@ -34,24 +34,15 @@ const postPosition  = async(req) => {
             Math.acos(Math.cos(lat) * Math.cos(plat) * Math.cos(plng - lng) + Math.sin(lat) * Math.sin(plat));
             distance += movedDistance;
             positions.push( {"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI});
-            console.log("p",positions);
     }
-    else if(status === "start")
+    else
     {
         distance = 0;
         positions = [{"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI}];
-        var now = Timestamp.now().toDate();
-        now.setHours(now.getHours());
-        const year = now.getFullYear();
-        const month = now.getMonth() ;
-        const date = now.getDate();
-        const hour = now.getHours();
-        const min = now.getMinutes();
-        const sec = now.getSeconds();
-        const shapedNow = new Date(year,month,date,hour,min,sec);
-        starttime = Timestamp.fromDate(shapedNow);
-        console.log(starttime.toDate());
+        starttime = Timestamp.now().toDate();
+        
     }
+
     if(status == "finish")
     {
         const usersRef = doc(db,"users",uid);
@@ -60,46 +51,36 @@ const postPosition  = async(req) => {
         var year = st.getFullYear();
         var month = st.getMonth() + 1 ;
         var date = st.getDate() ;
-        var hour = st.getHours();
-        var min = st.getMinutes();
-        var sec = st.getSeconds();
         month = ("0" + month).slice(-2);
         date = ("0" + date).slice(-2);
         
-
         const datekey = year + "-" + month + "-" + date;
-        var pdist;
-        var ptime;
         await getDoc(usersRef).then(doc => {
             data = doc.data();
-            
         });
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
-            data.runninglog[datekey].time += await req.time;
+            data.runninglog[datekey].time += req.time;
         }
         else
         {
-            
             data.runninglog[datekey]={
                 "distance" : distance,
-                "time" : await req.time
+                "time" : req.time
             }
-            console.log(data.runninglog[datekey]);
         }
         data.runninglog[datekey].distance
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
     }
     
-    
     var data = {
         distance:distance,
         positions:positions,
         starttime:starttime
     }
-    await setDoc(doc(db,"distances","testuid"),data);
+    await setDoc(doc(db,"distances",uid),data);
     return {
         "positions":positions,
         "distance":distance
