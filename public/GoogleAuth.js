@@ -21,8 +21,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider(app);
-document.getElementById("login").addEventListener("click", GoogleLogin);
-
+const login = document.getElementById("login");
+const logout = document.getElementById("logout");
+if (login !== null) {
+  login.addEventListener("click", GoogleLogin);
+}
+if (logout !== null) {
+  logout.addEventListener("click", GoogleSignOut);
+}
 function GoogleLogin() {
   signInWithPopup(auth, provider)
     .then((result) => {
