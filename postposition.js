@@ -9,10 +9,10 @@ import db from "./firebase.js";
 const postPosition  = async(req) => {
 
     let distance;
-    let uid = await req.uid;
-    let lat = await req.position.lat * Math.PI/180; //緯度
-    let lng = await req.position.lng * Math.PI/180; //経度
-    let status = await req.status;
+    let uid = req.uid;
+    let lat = req.position.lat * Math.PI/180; //緯度
+    let lng = req.position.lng * Math.PI/180; //経度
+    let status = req.status;
     let plat; //一つ前の緯度
     let plng; //一つ前の経度
     let positions; //
