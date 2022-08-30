@@ -1,5 +1,4 @@
-'use strict';
-{
+
     import {getAuth} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
     const auth = getAuth();
 
@@ -12,7 +11,7 @@
     var running = false;
 
     // STARTボタン
-    function start() {
+    async function start() {
         if (time == 0) {
             navigator.geolocation.getCurrentPosition((position) => {
                 //緯度
@@ -80,7 +79,7 @@
     }
 
     // STOPボタン
-    function stop() {
+    async function stop() {
         // 停止する
         clearTimeout(id);
         navigator.geolocation.getCurrentPosition((position) => {
@@ -122,5 +121,3 @@
     // クリックした時の処理
     button.addEventListener('click', click)
     resetBtn.addEventListener('click', reset); // RESETボタン
-
-}
