@@ -21,13 +21,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider(app);
-
 document.getElementById("login").addEventListener("click", GoogleLogin);
 
 function GoogleLogin() {
   signInWithPopup(auth, provider)
     .then((result) => {
-      window.location.href = "menu.html";
+      window.location.href = "top.html";
     })
     .catch((error) => {
       // Handle Errors here.
