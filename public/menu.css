@@ -1,3 +1,7 @@
+body{
+    background-color: #1A174D;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -10,7 +14,6 @@
     font-size: 24px;
   }
 
-  /* ここから下がハンバーガーメニューに関するCSS */
 
   /* チェックボックスを非表示にする */
   .drawer_hidden {
@@ -103,3 +106,34 @@
 
     color: #5E72E4;
   }
+
+  .sampleButton-ok {
+    width: 128px;
+    height: 40px;
+    margin: 8px;
+    background-color: #ff3535;
+    border: solid 1px #ff3535;
+    border-radius: 4px;
+    color: #fff;
+    font-size:12px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* OKの時のマウスオーバー */
+.sampleButton-ok:hover {
+    background-color: #da3232;
+}
+
+/* NGの時の基本スタイル(※OKボタンからの差分のみ) */
+.sampleButton-ng {
+    background-color: #fff;
+    border: solid 1px #3553ff;
+    color: #3553ff;
+}
+
+/* NGの時のマウスオーバー */
+.sampleButton-ng:hover{
+    background-color: #eee;
+}
