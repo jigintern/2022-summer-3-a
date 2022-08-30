@@ -12,7 +12,7 @@ class SampleButton {
             //クラスの追加
             this.classList.add('sampleButton-ng');
             //テキストの書き換え
-            this.textContent = "終了";
+            this.textContent = "FINISH!";
         } else {
             //クラスの削除
             this.classList.remove('sampleButton-ng');

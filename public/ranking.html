@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ranking.css">
+    <title>ランキングページ</title>
+</head>
+<body>
+    <header class="header">
+        <!-- ヘッダーロゴ -->
+        <div class="logo">ランキング</div>
+
+        <!-- ハンバーガーメニュー部分 -->
+        <div class="nav">
+
+          <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
+          <input id="drawer_input" class="drawer_hidden" type="checkbox">
+
+          <!-- ハンバーガーアイコン -->
+          <label for="drawer_input" class="drawer_open"><span></span></label>
+
+          <!-- メニュー -->
+          <nav class="nav_content">
+            <ul class="nav_list">
+              <li class="nav_item"><a href="top.html">Topページ</a></li>
+              <li class="nav_item"><a href="">プロフィール</a></li>
+              <li class="nav_item"><a href="">ランキング</a></li>
+              <li class="nav_item"><a href="">ミッション</a></li>
+            </ul>
+          </nav>
+
+        </div>
+      </header>
+
+      <select name="term" id="">
+        <option value="month">直近1か月</option>
+        <option value="week">直近1週間</option>
+      </select>
+
+      <select name="level" id="">
+        <option value="beginner">初級者</option>
+        <option value="intermediate">中級者</option>
+        <option value="advanced">上級者</option>
+      </select>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+      </ul>
+
+</body>
+<script type="text/javascript" src="top.js"></script>
+</html>
