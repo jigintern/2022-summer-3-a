@@ -108,32 +108,52 @@ body{
   }
 
   .sampleButton-ok {
-    width: 128px;
-    height: 40px;
-    margin: 8px;
-    background-color: #ff3535;
-    border: solid 1px #ff3535;
-    border-radius: 4px;
+    width: 300px;
+    height: 300px;
+    margin: 90px 40px;
+    background-color: #5E72E4;
+    border: solid 1px #2639a7;
+    border-radius: 200px;
     color: #fff;
     font-size:12px;
-    line-height: 40px;
+    line-height: 280px;
     text-align: center;
     cursor: pointer;
+    font-size: 90px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* OKの時のマウスオーバー */
 .sampleButton-ok:hover {
-    background-color: #da3232;
+    background-color: #5E72E4;
 }
 
-/* NGの時の基本スタイル(※OKボタンからの差分のみ) */
+/* NGの時の基本スタイル*/
 .sampleButton-ng {
-    background-color: #fff;
-    border: solid 1px #3553ff;
-    color: #3553ff;
+  width: 300px;
+  height: 300px;
+  margin: 90px 40px;
+  border-radius: 200px;
+  font-size:12px;
+  line-height: 280px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 90px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #fff;
+  border: solid 1px #3553ff;
+  color: black;
 }
 
 /* NGの時のマウスオーバー */
 .sampleButton-ng:hover{
-    background-color: #eee;
+    background-color: #F5365C;
+}
+
+.running_states{
+  background-color: #fff;
+}
+
+h1{
+  margin-top:1rem;
 }
