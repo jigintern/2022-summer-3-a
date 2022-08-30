@@ -41,13 +41,9 @@
       getAuth,
       GoogleAuthProvider,
       signInWithPopup,
+      signOut,
     } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
 
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
       apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
       authDomain: "running-ranking.firebaseapp.com",
@@ -63,16 +59,12 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider(app);
 
-    login.addEventListener("click", (e) => {
+    document.getElementById("login").addEventListener("click", GoogleLogin);
+
+    function GoogleLogin() {
       signInWithPopup(auth, provider)
         .then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          // The signed-in user info.
-          const user = result.user;
-
-          alert(user.displayName);
+          window.location.href = "menu.html";
         })
         .catch((error) => {
           // Handle Errors here.
@@ -84,6 +76,16 @@
           const credential = GoogleAuthProvider.credentialFromError(error);
           // ...
         });
-    });
+    }
+
+    function GoogleSignOut() {
+      signOut(auth)
+        .then(() => {
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   </script>
 </html>
