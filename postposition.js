@@ -70,7 +70,6 @@ const postPosition  = async(req) => {
                 "time" : req.time
             }
         }
-        data.runninglog[datekey].distance
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
     }
