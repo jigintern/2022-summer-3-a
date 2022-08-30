@@ -3,7 +3,7 @@ import {
 getDoc,
 setDoc,
 doc,Timestamp
-} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore-lite.js";
 import db from "./firebase.js";
 
 const postPosition  = async(req) => {
