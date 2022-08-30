@@ -47,6 +47,14 @@ serve(async (req) => {
           "content-type": "application/json"
       }
     });
+  }else if(req.method === "POST" && pathname === "/bet"){
+    const reqJson = await req.json()
+    const res = betUser(reqJson)
+    return new Response(JSON.stringify(res), {
+      headers: {
+          "content-type": "application/json"
+      }
+    });
   }
 
   return serveDir(req, {
