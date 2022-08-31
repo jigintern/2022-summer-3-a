@@ -5,19 +5,64 @@ import {
 //import ip from "https://esm.sh/ip@1.1.8"
 import db from "./firebase.js"
 
-const getUsers  = async (uid,key) => {
+const getUsers  = async (uid,key,level) => {
     const userDocs = await getDocs(collection(db, "users"))
     const users = []
+    console.log(level)
     userDocs.forEach((doc) => {
-        users.push({
-            uid:doc.id,
-            name:doc.data().name,
-            level:doc.data().level,
-            continuation:doc.data().continuation,
-            distance:doc.data().distance,
-        })
+        if(level === "1"){
+            if(doc.data().level === 1){
+                console.log(doc.data().runninglog)
+                const distance = 0
+                if(doc.data().runninglog.length){
+                    distance = doc.data().runninglog.reduce((sum,element) => {
+                        console.log(element)
+                        return sum + element.distance
+                    })
+                }
+                users.push({
+                    uid:doc.id,
+                    name:doc.data().name,
+                    level:doc.data().level,
+                    continuation:doc.data().continuation,
+                    distance:distance,
+                })
+            }
+        }
+        else if(level === "2"){
+            if(doc.data().level === 0){
+                users.push({
+                    uid:doc.id,
+                    name:doc.data().name,
+                    level:doc.data().level,
+                    continuation:doc.data().continuation,
+                    distance:doc.data().distance,
+                })
+            }
+        }
+        else if(level === "3"){
+            if(doc.data().level === 0){
+                users.push({
+                    uid:doc.id,
+                    name:doc.data().name,
+                    level:doc.data().level,
+                    continuation:doc.data().continuation,
+                    distance:doc.data().distance,
+                })
+            }
+        }
+        else{
+            console.log(typeof level)
+            console.log(level === 1)
+            users.push({
+                uid:doc.id,
+                name:doc.data().name,
+                level:doc.data().level,
+                continuation:doc.data().continuation,
+                distance:doc.data().distance,
+            })
+        }
     })
-    console.log(users)
     /*return new Response(JSON.stringify(data), 
         {
         headers: {
