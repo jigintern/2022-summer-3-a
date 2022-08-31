@@ -59,7 +59,6 @@ async function start() {
 
         const para = document.querySelector("#previousDistance");
         para.innerText = `走行距離：${user_distance.distance}`;
-        console.log(user_distance.distance);
     }
 
     else if (time % 3000 == 0) {
