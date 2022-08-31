@@ -32,6 +32,8 @@ const postPosition  = async(req) => {
             plng = pposition.lng * Math.PI/180;
             distance = doc.data()["distance"];
         });
+        if(plat == lat && plng == lng) movedDistance = 0;
+        else
         var movedDistance = 
             6371 * 1000 *
             Math.acos(Math.cos(lat) * Math.cos(plat) * Math.cos(plng - lng) + Math.sin(lat) * Math.sin(plat));
@@ -61,6 +63,7 @@ const postPosition  = async(req) => {
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
+        
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
@@ -86,10 +89,10 @@ const postPosition  = async(req) => {
         {
             cleardist = 7000;
         }
-
+        
         if(distance >= cleardist) data.runninglog[datekey].cleard = true;
         else data.runninglog[datekey].cleard = false;
-
+        
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
     }
@@ -99,6 +102,7 @@ const postPosition  = async(req) => {
         positions:positions,
         starttime:starttime
     }
+    
     await setDoc(doc(db,"distances",uid),data);
     return new Response(JSON.stringify({
             "positions":positions,
