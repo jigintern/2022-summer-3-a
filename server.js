@@ -3,6 +3,7 @@ import { serveDir } from "https://deno.land/std@0.151.0/http/file_server.ts";
 import getUser from "./getuser.js"
 import postPosition from "./postposition.js"
 import betUser from "./betuser.js"
+import liquidate from "./liquidate.js"
 
 serve(async (req) => {
     const url = new URL(req.url)
