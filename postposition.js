@@ -1,11 +1,8 @@
 import {
 getDoc,
-getDocs,
 setDoc,
 doc,
-collection,
 Timestamp,
-query
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore-lite.js";
 import db from "./firebase.js";
 
