@@ -45,7 +45,7 @@ async function start() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":"testuid",
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -73,7 +73,7 @@ async function start() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":"testuid",
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -124,7 +124,7 @@ async function stop() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            "uid": "testuid",
+            "uid": auth.currentUser.uid,
             "position":
             {
                 "lat": lat,//緯度
