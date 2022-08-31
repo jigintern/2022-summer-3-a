@@ -19,8 +19,7 @@ const postPosition  = async(req) => {
     let starttime;
     const docRef = doc(db, "distances", uid);
     const docSnap = await getDoc(docRef);
-
-    let distancesRef = doc(db,"distances",uid);
+    const distancesRef = doc(db,"distances",uid);
     
     if(status !== "start")
     {
@@ -88,7 +87,7 @@ const postPosition  = async(req) => {
             cleardist = 7000;
         }
 
-        if(distance>= cleardist) data.runninglog[datekey].cleard = true;
+        if(distance >= cleardist) data.runninglog[datekey].cleard = true;
         else data.runninglog[datekey].cleard = false;
 
         data.lastrun = starttime;
