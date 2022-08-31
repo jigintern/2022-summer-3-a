@@ -106,3 +106,58 @@ body{
 
     color: #5E72E4;
   }
+
+
+  .RankingList{
+    counter-reset: chapter;
+    background-color: #fff;
+    border-radius: 50px;
+    padding-left:20px;
+  }
+
+  .RankingList li {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #cde2e8;
+    list-style: none;
+  }
+
+  .RankingList li:before {
+    content: counter(chapter) " 位";
+    counter-increment: chapter;
+    margin: 20px 10px;
+    padding:10px;
+    border-radius: 50px;
+    background: #30b0d8;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  #name{
+    margin:15px 15px 15px 5px;
+    font-size: 30px;
+  }
+
+  #UserStatus{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  #uid{
+    opacity: 0.6;
+  }
+
+  #level{
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  #UserAchievement{
+    display:flex;
+    Justify-content:space-between;
+    margin:10px 15px 5px 5px;
+    font-size: larger;
+  }
