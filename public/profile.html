@@ -2,53 +2,109 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="profile.css" />
-    <title>Profile Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <a href="menu.html"><i class="fa fa-arrow-left"></i></a>
+    <div class="header">
+      <a href="top.html"><i class="fa fa-arrow-left"></i></a>
+      <a href="#" id="edit"><i class="fas fa-edit"></i></a>
+    </div>
     <div class="container">
-      <div class="card">
-        <div class="header">
-          <div class="main">
-            <div class="image"></div>
-            <h3 class="name">John Doe</h3>
-            <h3 class="sub-name">@J_Doe</h3>
+      <div class="title">プロフィール</div>
+      <div class="content">
+        <form action="#">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">名前</span>
+              <input id="name" type="text" placeholder="名前" />
+            </div>
+            <div class="input-box">
+              <span class="details">レベル</span>
+              <select name="level" id="level">
+                <option value="beginner">初級</option>
+                <option value="intermediate">中級</option>
+                <option value="pro">上級</option>
+              </select>
+            </div>
+            <div class="input-box">
+              <span class="details">生年月日</span>
+              <input type="date" id="birthday" name="birthday" />
+            </div>
+            <div class="input-box">
+              <span class="details">ミッションの状況</span>
+              <div class="chart-wrapper">
+                <canvas id="myChart"></canvas>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">賭け金の状況</span>
+              <span class="details">50RP</span>
+            </div>
           </div>
-        </div>
-
-        <div class="content">
-          <div class="left">
-            <div class="about-container">
-              <h3 class="title">About</h3>
-              <p class="text">
-                Lorem Ipsum is simply text of the printing and types industry.
-              </p>
-            </div>
-
-          <div class="right">
-            <div>
-              <h3 class="number-title">Posts</h3>
-              <h3 class="number">91</h3>
-            </div>
-            <div>
-              <h3 class="number-title">Following</h3>
-              <h3 class="number">2.4K</h3>
-            </div>
-            <div>
-              <h3 class="number-title">Followers</h3>
-              <h3 class="number">4.7K</h3>
-            </div>
+          <div class="button">
+            <input id="update" type="submit" value="更新" />
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>
+  <script>
+    let editBtn = document.getElementById("edit");
+    let name = document.getElementById("name");
+    let level = document.getElementById("level");
+    let birthday = document.getElementById("birthday");
+    editBtn.addEventListener("click", edit);
+    function edit() {
+      var updateBtn = document.getElementById("update");
+      if (updateBtn.style.display === "none") {
+        updateBtn.style.display = "block";
+        name.disabled = false;
+        level.disabled = false;
+        birthday.disabled = false;
+      } else {
+        updateBtn.style.display = "none";
+        name.disabled = true;
+        level.disabled = true;
+        birthday.disabled = true;
+      }
+    }
+  </script>
+  <script>
+    let canvas = document.getElementById("myChart");
+    let ctx = canvas.getContext("2d");
+    let perc = 25;
+
+    const config = {
+      type: "doughnut",
+      data: {
+        datasets: [
+          {
+            data: [perc, 100 - perc],
+            backgroundColor: ["#9b59b6", "#889d9e"],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          animateRotate: true,
+          onComplete: function () {
+            var cx = canvas.width / 2;
+            var cy = canvas.height / 2;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "16px verdana";
+            ctx.fillStyle = "black";
+            ctx.fillText(perc + "%", cx, cy);
+          },
+        },
+      },
+    };
+
+    new Chart(ctx, config);
+  </script>
 </html>

@@ -30,10 +30,10 @@ var button = document.getElementById('samplebutton');
 var running = false;
 var lat = 0;
 var lng = 0;
+var a = 0;
 
 // STARTボタン
 async function start() {
-    console.log("hello");
     if (time == 0) {
         navigator.geolocation.getCurrentPosition((position) => {
             //緯度
@@ -45,7 +45,7 @@ async function start() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":auth.uid,
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -56,6 +56,10 @@ async function start() {
             })
 
         });
+        const user_distance = await response.json();
+
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
     }
 
     else if (time % 3000 == 0) {
@@ -69,7 +73,7 @@ async function start() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":auth.uid,
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -80,6 +84,10 @@ async function start() {
             })
 
         });
+        const user_distance = await response.json();
+
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
     }
     // timeをsetTimeoutで設定したミリ秒ごとに1プラスする
     time++;
@@ -100,6 +108,8 @@ async function start() {
     id = setTimeout(start, 10);
 }
 
+
+
 // STOPボタン
 async function stop() {
     // 停止する
@@ -114,7 +124,7 @@ async function stop() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            "uid": auth.uid,
+            "uid": auth.currentUser.uid,
             "position":
             {
                 "lat": lat,//緯度
@@ -125,6 +135,10 @@ async function stop() {
         })
 
     });
+    const user_distance = await response.json();
+
+    const para = document.querySelector("#previousDistance");
+    para.innerText = `走行距離：${user_distance.distance}`;
 }
 
 function click() {
@@ -143,3 +157,5 @@ function reset() {
 // クリックした時の処理
 button.addEventListener('click', click)
 resetBtn.addEventListener('click', reset); // RESETボタン
+
+
