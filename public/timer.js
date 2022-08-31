@@ -30,7 +30,7 @@ var button = document.getElementById('samplebutton');
 var running = false;
 var lat = 0;
 var lng = 0;
-
+var a = 0;
 
 // STARTボタン
 async function start() {
