@@ -4,6 +4,7 @@ import getUser from "./getuser.js"
 import postPosition from "./postposition.js"
 import betUser from "./betuser.js"
 import liquidate from "./liquidate.js"
+import postUser from "./postuser.js"
 
 serve(async (req) => {
     const url = new URL(req.url)
@@ -18,7 +19,7 @@ serve(async (req) => {
         return res
     }else if(req.method === "POST" && pathname === "/user"){
         const reqJson = await req.json()
-        const res = await updateUser(reqJson)
+        const res = await postUser(reqJson)
         return res
     }else if(req.method === "POST" && pathname === "/position"){
         const reqJson = await req.json()
