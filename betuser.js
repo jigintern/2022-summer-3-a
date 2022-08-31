@@ -15,10 +15,10 @@ const betUser  = async (data) => {
     const target = targetDoc.data()
     const today = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
     const todate = today.getFullYear() + "/" +  (today.getMonth() + 1) + "/"+ today.getDate();
-    const betday = new Date(user["gambling"]["betdate"].toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000))
+    const betday = new Date(user["betdate"].toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000))
     const betdate = betday.getFullYear() + "/" +  (betday.getMonth() + 1) + "/"+ betday.getDate();
     const lastrun = (today - new Date(target.lastrun.toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000)))/ 1000 / 60 / 60 / 24
-    if(todate !== betdate){
+    if(todate !== betdate && user.gambling.length){
         return new Response("先に賭けの結果を清算してください",{
             status:400
         })
@@ -33,11 +33,11 @@ const betUser  = async (data) => {
             status:400
         })
     }
-    user["gambling"][data.targetid] = {
+    user.gambling.push({
         betting:data.betting,
-        name:target.name,
+        uid:data.targetid,
         wager:data.wager
-    }
+    })
     user["gambling"]["betdate"] = today
     const lastbet = new Date(target["betrp"]["lastbet"].toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
     const lastbetdate = lastbet.getFullYear() + "/" +  (lastbet.getMonth() + 1) + "/"+ lastbet.getDate();
