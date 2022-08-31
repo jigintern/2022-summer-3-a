@@ -19,13 +19,19 @@ const betUser  = async (data) => {
     const betdate = betday.getFullYear() + "/" +  (betday.getMonth() + 1) + "/"+ betday.getDate();
     const lastrun = (today - new Date(target.lastrun.toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000)))/ 1000 / 60 / 60 / 24
     if(todate !== betdate){
-        return 1
+        return new Response("先に賭けの結果を清算してください",{
+            status:400
+        })
     }
     else if(data.wager > user.rp){
-        return 2
+        return new Response("所持RPより大きな額は賭けれません",{
+            status:400
+        })
     }
     else if(lastrun >= 7){
-        return 3
+        return new Response("最後に走ってから1週間以上経過している人には賭けれません",{
+            status:400
+        })
     }
     user["gambling"][data.targetid] = {
         betting:data.betting,
@@ -51,9 +57,7 @@ const betUser  = async (data) => {
     target["betrp"]["lastbet"] = today
     await setDoc(userRef,user)
     await setDoc(targetRef,target)
-    //console.log(user)
-    //console.log(target)
-    return 0
+    return new Response(200,{status:200});
 }
 
 export default betUser

@@ -1,4 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import {
 getDoc,
 setDoc,
@@ -21,15 +20,15 @@ const postPosition  = async(req) => {
     if(status !== "start")
     {
         await getDoc(distancesRef).then(doc => {
-              distance = doc.data()["distance"];
-              positions = doc.data()["positions"];
-              starttime = doc.data()["starttime"];
-              const pposition = positions[positions.length-1];
-              plat = pposition.lat * Math.PI/180;
-              plng = pposition.lng * Math.PI/180;
-              distance = doc.data()["distance"];
-          });
-          var movedDistance = 
+            distance = doc.data()["distance"];
+            positions = doc.data()["positions"];
+            starttime = doc.data()["starttime"];
+            const pposition = positions[positions.length-1];
+            plat = pposition.lat * Math.PI/180;
+            plng = pposition.lng * Math.PI/180;
+            distance = doc.data()["distance"];
+        });
+        var movedDistance = 
             6371 * 1000 *
             Math.acos(Math.cos(lat) * Math.cos(plat) * Math.cos(plng - lng) + Math.sin(lat) * Math.sin(plat));
             distance += movedDistance;
@@ -80,10 +79,15 @@ const postPosition  = async(req) => {
         starttime:starttime
     }
     await setDoc(doc(db,"distances",uid),data);
-    return {
-        "positions":positions,
-        "distance":distance
-    }
+    return new Response(JSON.stringify({
+            "positions":positions,
+            "distance":distance
+        }), 
+        {
+        headers: {
+            "content-type": "application/json"
+        }
+    });
 }
 
 export default postPosition
