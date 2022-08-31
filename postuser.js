@@ -7,7 +7,6 @@ import {
 import db from "./firebase.js"
 
 const postUser  = async (data) => {
-    console.log(typeof data.birthday)
     const userRef = doc(db, "users", data.uid);
     const userDoc = await getDoc(userRef)
     if(userDoc.exists()){
