@@ -6,7 +6,7 @@ import {
 //import ip from "https://esm.sh/ip@1.1.8"
 import db from "./firebase.js"
 
-const getUser  = async (uid) => {
+const liquidate  = async (uid) => {
     const userRef = doc(db,"users",uid);
     const userDoc = await getDoc(userRef);
     const user = userDoc.data();
@@ -50,4 +50,4 @@ const getUser  = async (uid) => {
     });
 }
 
-export default getUser
+export default liquidate
