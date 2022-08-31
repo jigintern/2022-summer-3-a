@@ -8,18 +8,22 @@ import db from "./firebase.js"
 const getUsers  = async (uid,key,level) => {
     const userDocs = await getDocs(collection(db, "users"))
     const users = []
-    console.log(level)
+    //console.log(level)
     userDocs.forEach((doc) => {
         if(level === "1"){
             if(doc.data().level === 1){
-                console.log(doc.data().runninglog)
+                //console.log(doc.data().runninglog)
                 const distance = 0
-                if(doc.data().runninglog.length){
-                    distance = doc.data().runninglog.reduce((sum,element) => {
-                        console.log(element)
-                        return sum + element.distance
+                if(Object.keys(doc.data().runninglog).length){
+                    distance = Object.keys(doc.data().runninglog).reduce((sum,key) => {
+                        //console.log(key)
+                        //console.log(doc.data().runninglog.key.distance)
+                        return sum + doc.data().runninglog.key.distance
                     })
                 }
+                console.log("\n")
+                console.log(distance)
+                console.log("\n")
                 users.push({
                     uid:doc.id,
                     name:doc.data().name,
@@ -52,8 +56,8 @@ const getUsers  = async (uid,key,level) => {
             }
         }
         else{
-            console.log(typeof level)
-            console.log(level === 1)
+            //console.log(typeof level)
+            //console.log(level === 1)
             users.push({
                 uid:doc.id,
                 name:doc.data().name,
