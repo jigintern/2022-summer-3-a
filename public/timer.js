@@ -31,6 +31,7 @@ var running = false;
 var lat = 0;
 var lng = 0;
 
+
 // STARTボタン
 async function start() {
     if (time == 0) {
@@ -55,6 +56,10 @@ async function start() {
             })
 
         });
+        const user_distance = await response.json();
+
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
     }
 
     else if (time % 3000 == 0) {
@@ -79,6 +84,10 @@ async function start() {
             })
 
         });
+        const user_distance = await response.json();
+
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
     }
     // timeをsetTimeoutで設定したミリ秒ごとに1プラスする
     time++;
@@ -98,6 +107,8 @@ async function start() {
     // setTimeoutでstart関数をループさせるイメージ
     id = setTimeout(start, 10);
 }
+
+
 
 // STOPボタン
 async function stop() {
@@ -124,6 +135,10 @@ async function stop() {
         })
 
     });
+    const user_distance = await response.json();
+
+    const para = document.querySelector("#previousDistance");
+    para.innerText = `走行距離：${user_distance.distance}`;
 }
 
 function click() {
@@ -142,3 +157,5 @@ function reset() {
 // クリックした時の処理
 button.addEventListener('click', click)
 resetBtn.addEventListener('click', reset); // RESETボタン
+
+
