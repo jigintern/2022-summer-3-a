@@ -1,26 +1,39 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
-  authDomain: "running-ranking.firebaseapp.com",
-  projectId: "running-ranking",
-  storageBucket: "running-ranking.appspot.com",
-  messagingSenderId: "660141883268",
-  appId: "1:660141883268:web:fb085fe07d779f859da7d1",
-  measurementId: "G-MQ2CVEQL0X",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
 window.onload = async (event) => {
-    const response = await fetch("/ranking?uid=uid?key=");
+  const response = await fetch("/ranking");
+  const rank_para = await response.json()
+
+  // 自分のステータス(ownranks)
+  const Ownname = document.querySelector("#MyName");
+  Ownname.innerText = `${rank_para.ownranks.name}`;
+
+  const OwnId = document.querySelector("#OwnUid");
+  OwnId.innerText = `${rank_para.ownranks.uid}`;
+
+  const OwnLevel = document.querySelector("#OwnLevel");
+  if (OwnLevel == 1) {
+    level.innerText = "初級者";
+  }
+  else if (OwnLevel == 2) {
+    level.innerText = "中級者";
+  }
+  else if (OwnLevel == 3) {
+    level.innerText = "上級者";
+  }
+
+  const OwnContinuation = document.querySelector("#OwnContinuation");
+  OwnContinuation.innerText = `継続日数${rank_para.ownranks.continuation}`;
+
+  const OwnDistance = document.querySelector("#OwnDistance");
+  OwnDistance.innerText = `${rank_para.ownranks.distance}km走りました!`;
+
+  const OwnRank = document.querySelector("#OwnRank");
+  OwnRank.innerText = `${rank_para.ownranks.rank}位`;
+
+  //ランキング
+  const RankingList = document.getElementById("RankingList");
+  rank_para.rankers.forEach(function(element) {
+    let RankingContainer = document.createElement('li');
+    RankingContainer.className = 'RankingContainer';
+
+  })
   };

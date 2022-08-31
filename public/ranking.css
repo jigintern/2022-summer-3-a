@@ -108,7 +108,7 @@ body{
   }
 
 
-  .RankingList{
+  .RankingList .OwnRankingContainer{
     counter-reset: chapter;
     background-color: #fff;
     border-radius: 50px;

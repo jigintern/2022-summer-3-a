@@ -34,22 +34,40 @@
         </div>
       </header>
 
+      <!-- 期間のセレクタ -->
       <select name="term" id="">
         <option value="month">直近1か月</option>
         <option value="week">直近1週間</option>
       </select>
 
+      <!-- レベルのセレクタ -->
       <select name="level" id="">
         <option value="beginner">初級者</option>
         <option value="intermediate">中級者</option>
         <option value="advanced">上級者</option>
       </select>
 
+      <!-- 自分のステータス(ownranks) -->
+      <div class="OwnRankingContainer">
+        <div id="OwnStatus">
+          <div id="MyName"></div>
+          <a id="OwnUid" href=""></a>
+        </div>
+        <div id="Achievement">
+          <div id="OwnLevel"></div>
+          <div id="OwnContinuation"></div>
+          <div id="OwnDistance"></div>
+          <div id="OwnRank"></div>
+        </div>
+      </div>
+
+      <!-- ランキング -->
       <ul class="RankingList">
+
         <li class="RankingContainer">
           <div id="UserStatus">
             <div id="name">John Doe</div>
-            <div id="uid" href="">John_Doe_242</div>
+            <a id="uid" href="">John_Doe_242</a>
           </div>
           <div id="UserAchievement">
             <div id="level">level 3</div>
@@ -57,6 +75,8 @@
             <div id="distance">324km</div>
           </div>
         </li>
+
       </ul>
+
 </body>
 </html>
