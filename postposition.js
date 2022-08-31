@@ -17,12 +17,10 @@ const postPosition  = async(req) => {
     let plng; //一つ前の経度
     let positions; //
     let starttime;
-    let distancesRef;
-    let firstdata;
     const docRef = doc(db, "distances", uid);
     const docSnap = await getDoc(docRef);
 
-    distancesRef = doc(db,"distances",uid);
+    let distancesRef = doc(db,"distances",uid);
     
     if(status !== "start")
     {
