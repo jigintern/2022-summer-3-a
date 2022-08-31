@@ -10,7 +10,7 @@
   <body>
     <div class="header">
       <a href="top.html"><i class="fa fa-arrow-left"></i></a>
-      <a href="#"><i class="fas fa-edit"></i></a>
+      <a href="#" id="edit"><i class="fas fa-edit"></i></a>
     </div>
     <div class="container">
       <div class="title">プロフィール</div>
@@ -19,7 +19,7 @@
           <div class="user-details">
             <div class="input-box">
               <span class="details">名前</span>
-              <input type="text" placeholder="名前" required />
+              <input id="name" type="text" placeholder="名前" />
             </div>
             <div class="input-box">
               <span class="details">レベル</span>
@@ -44,10 +44,34 @@
               <span class="details">50RP</span>
             </div>
           </div>
+          <div class="button">
+            <input id="update" type="submit" value="更新" />
+          </div>
         </form>
       </div>
     </div>
   </body>
+  <script>
+    let editBtn = document.getElementById("edit");
+    let name = document.getElementById("name");
+    let level = document.getElementById("level");
+    let birthday = document.getElementById("birthday");
+    editBtn.addEventListener("click", edit);
+    function edit() {
+      var updateBtn = document.getElementById("update");
+      if (updateBtn.style.display === "none") {
+        updateBtn.style.display = "block";
+        name.disabled = false;
+        level.disabled = false;
+        birthday.disabled = false;
+      } else {
+        updateBtn.style.display = "none";
+        name.disabled = true;
+        level.disabled = true;
+        birthday.disabled = true;
+      }
+    }
+  </script>
   <script>
     let canvas = document.getElementById("myChart");
     let ctx = canvas.getContext("2d");
