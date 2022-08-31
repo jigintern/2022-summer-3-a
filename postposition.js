@@ -24,17 +24,7 @@ const postPosition  = async(req) => {
     let firstdata;
     const docRef = doc(db, "distances", uid);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-      } else {
-        firstdata = 
-            {
-                "distance":0,
-                "positions":{"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI},
-                "starttime":Timestamp.now()
-            };
-            await setDoc(doc(db,"users",uid),firstdata);
-      }
+
     distancesRef = doc(db,"distances",uid);
     
     if(status !== "start")
@@ -52,12 +42,12 @@ const postPosition  = async(req) => {
             6371 * 1000 *
             Math.acos(Math.cos(lat) * Math.cos(plat) * Math.cos(plng - lng) + Math.sin(lat) * Math.sin(plat));
             distance += movedDistance;
-            positions.push( {"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI});
+            positions.push( {"lat":lat * 180/ Math.PI,"lng":lng * 180/ Math.PI});
     }
     else
     {
         distance = 0;
-        positions = [{"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI}];
+        positions = [{"lat":lat * 180/ Math.PI,"lng":lng * 180/ Math.PI}];
         starttime = Timestamp.now().toDate();
         
     }
