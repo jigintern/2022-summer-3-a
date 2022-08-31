@@ -1,7 +1,11 @@
 import {
 getDoc,
+getDocs,
 setDoc,
-doc,Timestamp
+doc,
+collection,
+Timestamp,
+query
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore-lite.js";
 import db from "./firebase.js";
 
@@ -16,7 +20,23 @@ const postPosition  = async(req) => {
     let plng; //一つ前の経度
     let positions; //
     let starttime;
-    const distancesRef = doc(db,"distances",uid);
+    let distancesRef;
+    let firstdata;
+    const docRef = doc(db, "distances", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        firstdata = 
+            {
+                "distance":0,
+                "positions":{"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI},
+                "starttime":Timestamp.now()
+            };
+            await setDoc(doc(db,"users",uid),firstdata);
+      }
+    distancesRef = doc(db,"distances",uid);
+    
     if(status !== "start")
     {
         await getDoc(distancesRef).then(doc => {
@@ -69,6 +89,23 @@ const postPosition  = async(req) => {
                 "time" : req.time
             }
         }
+        let cleardist = 0
+        if(data.level === 1)
+        {
+            cleardist = 3000;
+        }
+        else if(data.level === 2)
+        {
+            cleardist = 5000;
+        }
+        else if(data.level === 3)
+        {
+            cleardist = 7000;
+        }
+
+        if(distance>= cleardist) data.runninglog[datekey].cleard = true;
+        else data.runninglog[datekey].cleard = false;
+
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
     }
