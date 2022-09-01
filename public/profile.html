@@ -110,14 +110,19 @@
           console.log(jsondata);
           name.placeholder = jsondata.name;
           level.value = jsondata.level;
-          console.log(jsondata.birthday.toDate());
-          birthday.value = jsondata.birthday;
+          console.log(toDateTime(jsondata.birthday.seconds));
+          birthday.value = toDateTime(jsondata.birthday.seconds);
         };
       } else {
         // User is signed out
         console.log("User is signed out");
       }
     });
+    function toDateTime(secs) {
+      var t = new Date(1970, 0, 1); // Epoch
+      t.setSeconds(secs);
+      return t;
+    }
   </script>
   <script>
     // Get the modal
@@ -152,6 +157,9 @@
     let level = document.getElementById("level");
     let birthday = document.getElementById("birthday");
     editBtn.addEventListener("click", edit);
+    name.disabled = true;
+    level.disabled = true;
+    birthday.disabled = true;
     function edit() {
       var updateBtn = document.getElementById("update");
       if (updateBtn.style.display === "none") {
@@ -167,39 +175,5 @@
       }
     }
   </script>
-  <script>
-    let canvas = document.getElementById("myChart");
-    let ctx = canvas.getContext("2d");
-    let perc = 25;
-
-    const config = {
-      type: "doughnut",
-      data: {
-        datasets: [
-          {
-            data: [perc, 100 - perc],
-            backgroundColor: ["#9b59b6", "#889d9e"],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        animation: {
-          animateScale: true,
-          animateRotate: true,
-          onComplete: function () {
-            var cx = canvas.width / 2;
-            var cy = canvas.height / 2;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "16px verdana";
-            ctx.fillStyle = "black";
-            ctx.fillText(perc + "%", cx, cy);
-          },
-        },
-      },
-    };
-
-    new Chart(ctx, config);
-  </script>
+  <script src="./profile.js"></script>
 </html>
