@@ -72,12 +72,12 @@ const postPosition  = async(req) => {
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
-        var seriestoday = false;
+        var donetoday = false;
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
             data.runninglog[datekey].time += req.time/100;
-            seriestoday = true;
+            donetoday = data.runninglog[datekey].cleard;
         }
         else
         {
@@ -104,13 +104,24 @@ const postPosition  = async(req) => {
         
         if(distance >= cleardist) data.runninglog[datekey].cleard = true;
         else data.runninglog[datekey].cleard = false;
-
-        if(data.runninglog[pastdatekey]!= null && !seriestoday && data.runninglog[datekey].cleard)
+        
+        if(data.runninglog[pastdatekey] != null && !donetoday)
         {
-            data.continuation += 1;
-            if(data.maxcontinuation < data.continuation)
+            if(data.runninglog[datekey].clead && data.runninglog[pastdatekey].clead)
             {
-                data.maxcontinuation = data.continuation
+                data.continuation += 1;
+                if(data.maxcontinuation < data.continuation)
+                {
+                    data.maxcontinuation = data.continuation
+                }
+            }
+            else if(data.runninglog[datekey].clead && !data.runninglog[pastdatekey].clead)
+            {
+                data.continuation = 1;
+            }
+            else if(!data.runninglog[datekey].clead && !data.runninglog[pastdatekey].clead)
+            {
+                data.continuation = 0;
             }
         }
         else if(data.runninglog[pastdatekey]== null && data.runninglog[datekey].cleard)
