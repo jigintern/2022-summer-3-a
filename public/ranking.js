@@ -1,26 +1,101 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
-  authDomain: "running-ranking.firebaseapp.com",
-  projectId: "running-ranking",
-  storageBucket: "running-ranking.appspot.com",
-  messagingSenderId: "660141883268",
-  appId: "1:660141883268:web:fb085fe07d779f859da7d1",
-  measurementId: "G-MQ2CVEQL0X",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
 window.onload = async (event) => {
-    const response = await fetch("/ranking?uid=uid?key=");
+  // jsonの受け取り
+  const response = await fetch("/users?key=distance&uid=testid1&level=1");
+  const rank_para = await response.json()
+
+  // 自分のステータス(ownrank)
+  const OwnName = document.querySelector("#MyName");
+  OwnName.innerText = `${rank_para.ownrank.name}`;
+
+  const OwnId = document.querySelector("#OwnUid");
+  OwnId.innerText = `${rank_para.ownrank.uid}`;
+
+  const OwnLevel = document.querySelector("#OwnLevel");
+  if (OwnLevel == 1) {
+    OwnLevel.innerText = "初級者";
+  }
+  else if (OwnLevel == 2) {
+    OwnLevel.innerText = "中級者";
+  }
+  else if (OwnLevel == 3) {
+    OwnLevel.innerText = "上級者";
+  }
+
+  const OwnContinuation = document.querySelector("#OwnContinuation");
+  OwnContinuation.innerText = `継続日数${rank_para.ownrank.continuation}`;
+
+  const OwnDistance = document.querySelector("#OwnDistance");
+  OwnDistance.innerText = `${rank_para.ownrank.distance}km走りました!`;
+
+  const OwnRank = document.querySelector("#OwnRank");
+  OwnRank.innerText = `${rank_para.ownrank.rank}位`;
+
+
+  //ランキング
+  const RankingList = document.getElementById("RankingList");
+
+  rank_para.rankers.forEach(function (element) {
+    //li要素の作成
+    let RankingContainer = document.createElement('li');
+    RankingContainer.className = "RankingContainer";
+    RankingList.appendChild(RankingContainer);
+
+    //div class=UserStatusの作成
+    let UserStatus = document.createElement('div');
+    UserStatus.className = "UserStates";
+    RankingContainer.appendChild(UserStatus);
+
+    //p class=Unameの作成
+    let Uname = document.createElement('p');
+    Uname.className = "Uname";
+    UserStatus.appendChild(Uname);
+
+    //a class=Uidの作成
+    let Uid = document.createElement('a');
+    Uid.className = "Uid";
+    UserStatus.appendChild(Uid);
+
+    //div class=UserAchievementの作成
+    let UserAchievement = document.createElement('div');
+    UserAchievement.className = "UserAchievement";
+    RankingContainer.appendChild(UserAchievement);
+
+    //pタグ(level, continuation, distance)の作成
+    let level = document.createElement('p');
+    let continuation = document.createElement('p');
+    let distance = document.createElement('p');
+
+    level.className = "level";
+    continuation.className = "continuation";
+    distance.className = "distance";
+
+    UserAchievement.appendChild(level);
+    UserAchievement.appendChild(continuation);
+    UserAchievement.appendChild(distance);
+
+    //DOM操作
+    const userName = document.querySelector("#Uname");
+    userName.innerText = `${rank_para.rankers.name}`;
+
+    const userId = document.querySelector("#Uid");
+    userId.innerText = `${rank_para.rankers.uid}`;
+
+    const userLevel = document.querySelector("#level");
+    if (userLevel == 1) {
+      userLevel.innerText = "初級者";
+    }
+    else if (OwnLevel == 2) {
+      userLevel.innerText = "中級者";
+    }
+    else if (OwnLevel == 3) {
+      userLevel.innerText = "上級者";
+    }
+
+    const userContinuation = document.querySelector("#continuation");
+    userContinuation.innerText = `継続日数${rank_para.rankers.continuation}`;
+
+    const userDistance = document.querySelector("#distance");
+    userDistance.innerText = `${rank_para.rankers.distance}km走りました!`;
+
+  })
   };

@@ -72,6 +72,48 @@
       </div>
     </div>
   </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+    } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
+      authDomain: "running-ranking.firebaseapp.com",
+      projectId: "running-ranking",
+      storageBucket: "running-ranking.appspot.com",
+      messagingSenderId: "660141883268",
+      appId: "1:660141883268:web:fb085fe07d779f859da7d1",
+      measurementId: "G-MQ2CVEQL0X",
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(user.uid);
+        // var name = document.getElementById("name");
+        // name.placeholder = user.displayName;
+
+        const path = `/user?uid=${uid}&targetuid=${uid}`;
+        window.onload = async (event) => {
+          const res = await fetch(path, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          let jsondata = await res.json();
+          console.log(jsondata);
+        };
+      } else {
+        // User is signed out
+        console.log("User is signed out");
+      }
+    });
+  </script>
   <script>
     // Get the modal
     var modal = document.getElementById("bet_modal");
