@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="ranking.css">
+    <script type="module" src="./ranking.js"></script>
     <title>ランキングページ</title>
 </head>
 <body>
@@ -34,29 +35,59 @@
         </div>
       </header>
 
-      <select name="term" id="">
-        <option value="month">直近1か月</option>
-        <option value="week">直近1週間</option>
-      </select>
 
-      <select name="level" id="">
-        <option value="beginner">初級者</option>
-        <option value="intermediate">中級者</option>
-        <option value="advanced">上級者</option>
-      </select>
+      <!-- 自分のステータス(ownranks) -->
+      <h1 id="OwnRankingHeder">自分の順位</h1>
+      <div class="OwnRankingContainer">
+        <div id="OwnStatus">
+          <h1 id="OwnRank"></h1>
+          <p id="MyName"></p>
+        </div>
+        <div id="Achievement">
+          <p id="OwnLevel"></p>
+          <p id="OwnContinuation"></p>
+          <p id="OwnDistance"></p>
+        </div>
+      </div>
 
-      <ul class="RankingList">
-        <li class="RankingContainer">
-          <div id="UserStatus">
-            <div id="name">John Doe</div>
-            <div id="uid" href="">John_Doe_242</div>
+      <!-- ランキング -->
+      <h1 id="RankingHeder">みんなの順位</h1>
+      <!-- 期間のセレクタ -->
+      <form name="form1">
+        <select name="term">
+          <option value=distance>全期間の距離</option>
+          <option value=distbymonth>直近1か月の距離</option>
+          <option value=distbyweek>直近1週間の距離</option>
+          <option value=avg>一日当たりの距離の平均</option>
+          <option value=continuation>継続日数</option>
+          <option value=maxcontinuation>今までで一番継続した日数</option>
+        </select>
+
+        <!-- レベルのセレクタ -->
+        <select name="LevelSelect">
+          <option value=0>全てのランク</option>
+          <option value=1>初級者</option>
+          <option value=2>中級者</option>
+          <option value=3>上級者</option>
+        </select>
+      </form>
+
+      <ul id="RankingList">
+
+        <!-- <li class="RankingContainer">
+          <div class="UserStatus">
+            <p class="Uname">John Doe</p>
+            <a class="Uid" href="">John_Doe_242</a>
           </div>
-          <div id="UserAchievement">
-            <div id="level">level 3</div>
-            <div id="contuition">12日</div>
-            <div id="distance">324km</div>
+          <div class="UserAchievement">
+            <p class="level">level 3</p>
+            <p class="continuation">12日</p>
+            <p class="distance">324km</p>
           </div>
-        </li>
+        </li> -->
+
       </ul>
+
+
 </body>
 </html>

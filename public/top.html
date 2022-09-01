@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="top.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
     <title>トップページ</title>
 </head>
 <body>
+  
     <header class="header">
       <!-- ヘッダーロゴ -->
       <div class="logo">Top</div>
@@ -41,13 +43,14 @@
         <h1 class="run_time">走行時間</h1>
         <div class="timerLabel">00:00:00</div>
         <button id="resetBtn">RESET</button>
+        <div id="previousDistance"></div>
       </div>
-      <div id="previousDistance"></div>
+    <div id="previousDistance"></div>
+    <div id="mapcontainer" ></div>
+    
     <script type="module" src="timer.js"></script>
     <script type="module" src="googleAuth.js"></script>
-
     <!-- 30秒毎に位置情報をPOST -->
-
   </body>
   <script type="text/javascript" src="top.js"></script>
 </html>
