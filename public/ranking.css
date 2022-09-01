@@ -107,7 +107,7 @@ body{
     color: #5E72E4;
   }
 
-
+/* ランキング */
   .RankingList{
     counter-reset: chapter;
     background-color: #fff;
@@ -123,21 +123,21 @@ body{
     list-style: none;
   }
 
-  .RankingList li:before {
-    content: counter(chapter) " 位";
+  .RankingList li::before {
     counter-increment: chapter;
+    content: counter(chapter) "位";
     margin: 20px 10px;
     padding:10px;
     border-radius: 50px;
-    background: #30b0d8;
-    color: #fff;
+    color: rgb(212, 21, 21);
     text-align: center;
     font-weight: bold;
+    font-size: 40px;
   }
 
   #name{
     margin:15px 15px 15px 5px;
-    font-size: 30px;
+    font-size: 20px;
   }
 
   #UserStatus{
