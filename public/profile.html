@@ -25,9 +25,9 @@
             <div class="input-box">
               <span class="details">レベル</span>
               <select name="level" id="level">
-                <option value="beginner">初級</option>
-                <option value="intermediate">中級</option>
-                <option value="pro">上級</option>
+                <option value="1">初級</option>
+                <option value="2">中級</option>
+                <option value="3">上級</option>
               </select>
             </div>
             <div class="input-box">
@@ -96,8 +96,9 @@
       if (user) {
         const uid = user.uid;
         console.log(user.uid);
-        // var name = document.getElementById("name");
-        // name.placeholder = user.displayName;
+        const name = document.getElementById("name");
+        const birthday = document.getElementById("birthday");
+        const level = document.getElementById("level");
 
         const path = `/user?uid=${uid}&targetuid=${uid}`;
         window.onload = async (event) => {
@@ -107,6 +108,10 @@
           });
           let jsondata = await res.json();
           console.log(jsondata);
+          name.placeholder = jsondata.name;
+          level.value = jsondata.level;
+          console.log(jsondata.birthday.toDate());
+          birthday.value = jsondata.birthday;
         };
       } else {
         // User is signed out
