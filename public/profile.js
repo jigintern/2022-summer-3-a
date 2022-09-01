@@ -16,14 +16,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-
+const user_name = document.getElementById("name");
+const user_birthday = document.getElementById("birthday");
+const user_level = document.getElementById("level");
+const betClear = document.getElementById("bet_clear");
+const betFail = document.getElementById("bet_fail");
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const uid = user.uid;
     console.log(user.uid);
-    const name = document.getElementById("name");
-    const birthday = document.getElementById("birthday");
-    const level = document.getElementById("level");
 
     const path = `/user?uid=${uid}&targetuid=${uid}`;
     const res = await fetch(path, {
@@ -32,10 +33,12 @@ onAuthStateChanged(auth, async (user) => {
     });
     let jsondata = await res.json();
     console.log(jsondata);
-    name.placeholder = jsondata.name;
+    user_name.placeholder = jsondata.name;
     level.value = jsondata.level;
     console.log(toDateTime(jsondata.birthday.seconds));
-    birthday.value = toDateTime(jsondata.birthday.seconds);
+    user_birthday.value = toDateTime(jsondata.birthday.seconds);
+    betClear.innerText = jsondata.betrp.clear;
+    betFail.innerText = jsondata.betrp.fail;
   } else {
     // User is signed out
     console.log("User is signed out");
@@ -46,6 +49,21 @@ function toDateTime(secs) {
   t.setSeconds(secs);
   return t;
 }
+
+const response = await fetch("/user", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    uid: auth.currentUser.uid,
+    position: {
+      lat: lat, //緯度
+      lng: lng, //経度
+    },
+    time: time,
+    status: "start",
+  }),
+});
+
 // Get the modal
 var modal = document.getElementById("bet_modal");
 
