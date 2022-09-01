@@ -25,7 +25,7 @@ serve(async (req) => {
         const reqJson = await req.json()
         const res = await postPosition(reqJson)
         return res
-    }else if(req.method === "GET" && pathname === "/ranking"){
+    }else if(req.method === "GET" && pathname === "/users"){
         const res = await getUsers(url.searchParams.get("uid"),url.searchParams.get("key"))
         return res
     }else if(req.method === "GET" && pathname === "/liquidation"){
