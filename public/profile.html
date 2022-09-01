@@ -25,9 +25,9 @@
             <div class="input-box">
               <span class="details">レベル</span>
               <select name="level" id="level">
-                <option value="beginner">初級</option>
-                <option value="intermediate">中級</option>
-                <option value="pro">上級</option>
+                <option value="1">初級</option>
+                <option value="2">中級</option>
+                <option value="3">上級</option>
               </select>
             </div>
             <div class="input-box">
@@ -45,11 +45,11 @@
               <ul class="category__list">
                 <li class="category__item" id="bet_btn">
                   <h3 class="category__name">Clear</h3>
-                  <a href="#" class="category__details"> 100RP </a>
+                  <a id="bet_clear" href="#" class="category__details"> </a>
                 </li>
                 <li class="category__item" id="bet_btn">
                   <h3 class="category__name">Fail</h3>
-                  <a href="#" class="category__details"> 100RP </a>
+                  <a id="bet_fail" href="#" class="category__details"> </a>
                 </li>
               </ul>
             </div>
@@ -72,129 +72,5 @@
       </div>
     </div>
   </body>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-    } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
-      authDomain: "running-ranking.firebaseapp.com",
-      projectId: "running-ranking",
-      storageBucket: "running-ranking.appspot.com",
-      messagingSenderId: "660141883268",
-      appId: "1:660141883268:web:fb085fe07d779f859da7d1",
-      measurementId: "G-MQ2CVEQL0X",
-    };
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(user.uid);
-        // var name = document.getElementById("name");
-        // name.placeholder = user.displayName;
-
-        const path = `/user?uid=${uid}&targetuid=${uid}`;
-        window.onload = async (event) => {
-          const res = await fetch(path, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
-          let jsondata = await res.json();
-          console.log(jsondata);
-        };
-      } else {
-        // User is signed out
-        console.log("User is signed out");
-      }
-    });
-  </script>
-  <script>
-    // Get the modal
-    var modal = document.getElementById("bet_modal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("bet_btn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-      modal.style.display = "block";
-    };
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-      modal.style.display = "none";
-    };
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-  </script>
-  <script>
-    let editBtn = document.getElementById("edit");
-    let name = document.getElementById("name");
-    let level = document.getElementById("level");
-    let birthday = document.getElementById("birthday");
-    editBtn.addEventListener("click", edit);
-    function edit() {
-      var updateBtn = document.getElementById("update");
-      if (updateBtn.style.display === "none") {
-        updateBtn.style.display = "block";
-        name.disabled = false;
-        level.disabled = false;
-        birthday.disabled = false;
-      } else {
-        updateBtn.style.display = "none";
-        name.disabled = true;
-        level.disabled = true;
-        birthday.disabled = true;
-      }
-    }
-  </script>
-  <script>
-    let canvas = document.getElementById("myChart");
-    let ctx = canvas.getContext("2d");
-    let perc = 25;
-
-    const config = {
-      type: "doughnut",
-      data: {
-        datasets: [
-          {
-            data: [perc, 100 - perc],
-            backgroundColor: ["#9b59b6", "#889d9e"],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        animation: {
-          animateScale: true,
-          animateRotate: true,
-          onComplete: function () {
-            var cx = canvas.width / 2;
-            var cy = canvas.height / 2;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "16px verdana";
-            ctx.fillStyle = "black";
-            ctx.fillText(perc + "%", cx, cy);
-          },
-        },
-      },
-    };
-
-    new Chart(ctx, config);
-  </script>
+  <script type="module" src="./profile.js"></script>
 </html>
