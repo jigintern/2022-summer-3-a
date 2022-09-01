@@ -5,6 +5,7 @@ import postPosition from "./postposition.js"
 import betUser from "./betuser.js"
 import liquidate from "./liquidate.js"
 import postUser from "./postuser.js"
+import getUsers from "./getranking.js"
 
 serve(async (req) => {
     const url = new URL(req.url)
@@ -25,8 +26,9 @@ serve(async (req) => {
         const reqJson = await req.json()
         const res = await postPosition(reqJson)
         return res
-    }else if(req.method === "GET" && pathname === "/ranking"){
-        const res = await getUsers(url.searchParams.get("uid"),url.searchParams.get("key"))
+    }else if(req.method === "GET" && pathname === "/users"){
+        const res = await getUsers(url.searchParams.get("uid"),url.searchParams.get("key"),url.searchParams.get("level"))
+
         return res
     }else if(req.method === "GET" && pathname === "/liquidation"){
         const res = await liquidate(url.searchParams.get("uid"))
