@@ -17,7 +17,6 @@ const getUsers  = async (uid,key,level) => {
     }else{
         today.setFullYear(0)
     }
-    console.log(today)
     userDocs.forEach((doc) => {
         if(level === "1"){
             if(doc.data().level === 1){
@@ -117,7 +116,7 @@ const getUsers  = async (uid,key,level) => {
                 distance:distance,
             })
         }
-        if(doc.data().uid === uid){
+        if(doc.id === uid){
             own = {
                 uid:doc.id,
                 name:doc.data().name,
@@ -146,15 +145,16 @@ const getUsers  = async (uid,key,level) => {
             status:400
         })
     }
+    users.reverse()
     if(!Object.keys(own).length){
         return new Response("このuidは登録されていませんです",{
             status:400
         })
     }
-    users.forEach((user,i) => {
+    users.some((user,i) => {
         if(user.uid === uid){
             own.rank = i+1
-            break
+            return 1
         }
     })
     const res = {
