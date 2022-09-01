@@ -6,24 +6,21 @@ window.onload = async (event) => {
 
   // 自分のステータス(ownrank)
   const OwnName = document.querySelector("#MyName");
-  OwnName.innerText = `${rank_para.ownranks.name}`;
-
-  const OwnId = document.querySelector("#OwnUid");
-  OwnId.innerText = `${rank_para.ownranks.uid}`;
+  OwnName.innerText = `ユーザ名: ${rank_para.ownranks.name}`;
 
   const OwnLevel = document.querySelector("#OwnLevel");
-  if (OwnLevel == 1) {
+  if (rank_para.ownranks.rank == 1) {
     OwnLevel.innerText = "初級者";
   }
-  else if (OwnLevel == 2) {
+  else if (rank_para.ownranks.rank == 2) {
     OwnLevel.innerText = "中級者";
   }
-  else if (OwnLevel == 3) {
+  else if (rank_para.ownranks.rank == 3) {
     OwnLevel.innerText = "上級者";
   }
 
   const OwnContinuation = document.querySelector("#OwnContinuation");
-  OwnContinuation.innerText = `継続日数${rank_para.ownranks.continuation}`;
+  OwnContinuation.innerText = `継続日数: ${rank_para.ownranks.continuation}`;
 
   const OwnDistance = document.querySelector("#OwnDistance");
   OwnDistance.innerText = `${rank_para.ownranks.distance}km走りました!`;
@@ -71,7 +68,7 @@ window.onload = async (event) => {
 
     //DOM操作
       const userName = document.querySelector(`.Uname${i}`);
-      userName.innerText = `${element.name}`;
+      userName.innerText = `ユーザ名: ${element.name}`;
 
       const userLevel = document.querySelector(`.level${i}`);
       if (element.level == 1) {
@@ -85,10 +82,17 @@ window.onload = async (event) => {
       }
 
       const userContinuation = document.querySelector(`.continuation${i}`);
-      userContinuation.innerText = `継続日数${element.continuation}`;
+      userContinuation.innerText = `継続日数: ${element.continuation}`;
 
       const userDistance = document.querySelector(`.distance${i}`);
     userDistance.innerText = `${element.distance}km走りました!`;
 
+    //セレクタによる場合分け
+    //ランクごと
+    const AllRank = document.getElementById("AllRank");
+    const BeginnerRank = document.getElementById("beginner");
+    const IntermediateRank = document.getElementById("intermediate");
+    const AdvancedRank = document.getElementById("beginner");
+    //期間ごと
   })
   };

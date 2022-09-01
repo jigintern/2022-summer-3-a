@@ -35,34 +35,37 @@
         </div>
       </header>
 
+
+      <!-- 自分のステータス(ownranks) -->
+      <h1 id="OwnRankingHeder">自分の順位</h1>
+      <div class="OwnRankingContainer">
+        <div id="OwnStatus">
+          <h1 id="OwnRank"></h1>
+          <p id="MyName"></p>
+        </div>
+        <div id="Achievement">
+          <p id="OwnLevel"></p>
+          <p id="OwnContinuation"></p>
+          <p id="OwnDistance"></p>
+        </div>
+      </div>
+
+      <!-- ランキング -->
+      <h1 id="RankingHeder">みんなの順位</h1>
       <!-- 期間のセレクタ -->
       <select name="term" id="">
+        <option value="AllTerm">全期間</option>
         <option value="month">直近1か月</option>
         <option value="week">直近1週間</option>
       </select>
 
       <!-- レベルのセレクタ -->
       <select name="level" id="">
-        <option value="beginner">初級者</option>
-        <option value="intermediate">中級者</option>
-        <option value="advanced">上級者</option>
+        <option value="AllRank" id="AllRank">全てのランク</option>
+        <option value="beginner" id="beginner">初級者</option>
+        <option value="intermediate" id="intermediate">中級者</option>
+        <option value="advanced" id="advanced">上級者</option>
       </select>
-
-      <!-- 自分のステータス(ownranks) -->
-      <div class="OwnRankingContainer">
-        <div id="OwnStatus">
-          <p id="MyName"></p>
-          <a id="OwnUid" href=""></a>
-        </div>
-        <div id="Achievement">
-          <p id="OwnLevel"></p>
-          <p id="OwnContinuation"></p>
-          <p id="OwnDistance"></p>
-          <p id="OwnRank"></p>
-        </div>
-      </div>
-
-      <!-- ランキング -->
       <ul id="RankingList">
 
         <!-- <li class="RankingContainer">

@@ -108,11 +108,25 @@ body{
   }
 
 /* ランキング */
+
+
+  #OwnRankingHeder{
+    background-color: #5E72E4;
+  }
+
+  #RankingHeder{
+    background-color: #5E72E4;
+    margin-bottom: 3px;
+  }
+
+  #OwnRank{
+    margin: 8px;
+    font-size: 40px;
+  }
   #RankingList{
     counter-reset: chapter;
-    background-color: #fff;
     border-radius: 50px;
-    padding-left:20px;
+    margin:20px;
   }
 
   #RankingList li {
@@ -121,6 +135,7 @@ body{
     padding-bottom: 20px;
     border-bottom: 1px dashed #cde2e8;
     list-style: none;
+    background-color: #cde2e8;
   }
 
   #RankingList li::before {
@@ -129,7 +144,7 @@ body{
     margin: 20px 10px;
     padding:10px;
     border-radius: 50px;
-    color: rgb(212, 21, 21);
+    color: black;
     text-align: center;
     font-weight: bold;
     font-size: 40px;
@@ -161,3 +176,18 @@ body{
     margin:10px 15px 5px 5px;
     font-size: larger;
   }
+
+.OwnRankingContainer{
+  background-color: aliceblue;
+  border-radius: 20px;
+  padding:4px;
+  margin:5px;
+}
+
+ul {
+  padding-inline-start: 0px;
+}
+
+#RankingContainer0 ::before {
+  color: #ffd700;
+}
