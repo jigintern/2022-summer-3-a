@@ -1,21 +1,81 @@
-window.onload = async (event) => {
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
+  authDomain: "running-ranking.firebaseapp.com",
+  projectId: "running-ranking",
+  storageBucket: "running-ranking.appspot.com",
+  messagingSenderId: "660141883268",
+  appId: "1:660141883268:web:fb085fe07d779f859da7d1",
+  measurementId: "G-MQ2CVEQL0X",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const selectTerm = document.querySelector('[name="term"]');
+    const selectLevel = document.querySelector('[name="LevelSelect"]');
+    ChangeRanking(selectTerm, selectLevel, user.uid);
+    console.log("aaa");
+
+    selectTerm.onchange = async (event) => {
+      ChangeRanking(selectTerm, selectLevel, user.uid);
+    };
+
+    selectLevel.onchange = async (event) => {
+      ChangeRanking(selectTerm, selectLevel, user.uid);
+    };
+  }
+  else {
+    console.log("not login");
+  }
+})
+const getCurrentPosition = (options) => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    })
+}
+
+async function ChangeRanking(selectTerm, selectLevel, uid) {
+    //セレクタによる場合分け
+    //レベルごと
+    const LevelSelect = document.form1.LevelSelect;
+    const level_num = LevelSelect.selectedIndex;
+
+    //期間ごと
+    const term = document.form1.term;
+    const term_num = term.selectedIndex;
+    const term_value = term.options[term_num].value;
+
   // jsonの受け取り
-  const response = await fetch("/users?key=distance&uid=testid1&level=1");
-  const rank_para = await response.json()
-  console.log(rank_para);
+  const path = `/users?key=${selectTerm.value}&uid=${uid}&level=${selectLevel.value}`
+  console.log(path);
+  const response = await fetch(path);
+  const rank_para = await response.json();
 
   // 自分のステータス(ownrank)
   const OwnName = document.querySelector("#MyName");
   OwnName.innerText = `ユーザ名: ${rank_para.ownranks.name}`;
 
   const OwnLevel = document.querySelector("#OwnLevel");
-  if (rank_para.ownranks.rank == 1) {
+  if (rank_para.ownranks.level == 1) {
     OwnLevel.innerText = "初級者";
   }
-  else if (rank_para.ownranks.rank == 2) {
+  else if (rank_para.ownranks.level == 2) {
     OwnLevel.innerText = "中級者";
   }
-  else if (rank_para.ownranks.rank == 3) {
+  else if (rank_para.ownranks.level == 3) {
     OwnLevel.innerText = "上級者";
   }
 
@@ -32,7 +92,7 @@ window.onload = async (event) => {
   //ランキング
   const RankingList = document.getElementById("RankingList");
 
-  rank_para.rankers.forEach(function (element,i) {
+  rank_para.rankers.forEach(function (element, i) {
     //li要素の作成
     let RankingContainer = document.createElement('li');
     RankingContainer.className = `RankingContainer${i}`;
@@ -67,32 +127,24 @@ window.onload = async (event) => {
     UserAchievement.appendChild(distance);
 
     //DOM操作
-      const userName = document.querySelector(`.Uname${i}`);
-      userName.innerText = `ユーザ名: ${element.name}`;
+    const userName = document.querySelector(`.Uname${i}`);
+    userName.innerText = `ユーザ名: ${element.name}`;
 
-      const userLevel = document.querySelector(`.level${i}`);
-      if (element.level == 1) {
-        userLevel.innerText = "初級者";
-      }
-      else if (element.level == 2) {
-        userLevel.innerText = "中級者";
-      }
-      else if (element.level == 3) {
-        userLevel.innerText = "上級者";
-      }
+    const userLevel = document.querySelector(`.level${i}`);
+    if (element.level == 1) {
+      userLevel.innerText = "初級者";
+    }
+    else if (element.level == 2) {
+      userLevel.innerText = "中級者";
+    }
+    else if (element.level == 3) {
+      userLevel.innerText = "上級者";
+    }
 
-      const userContinuation = document.querySelector(`.continuation${i}`);
-      userContinuation.innerText = `継続日数: ${element.continuation}`;
+    const userContinuation = document.querySelector(`.continuation${i}`);
+    userContinuation.innerText = `継続日数: ${element.continuation}`;
 
-      const userDistance = document.querySelector(`.distance${i}`);
+    const userDistance = document.querySelector(`.distance${i}`);
     userDistance.innerText = `${element.distance}km走りました!`;
-
-    //セレクタによる場合分け
-    //ランクごと
-    const AllRank = document.getElementById("AllRank");
-    const BeginnerRank = document.getElementById("beginner");
-    const IntermediateRank = document.getElementById("intermediate");
-    const AdvancedRank = document.getElementById("beginner");
-    //期間ごと
   })
-  };
+}

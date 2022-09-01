@@ -53,19 +53,25 @@
       <!-- ランキング -->
       <h1 id="RankingHeder">みんなの順位</h1>
       <!-- 期間のセレクタ -->
-      <select name="term" id="">
-        <option value="AllTerm">全期間</option>
-        <option value="month">直近1か月</option>
-        <option value="week">直近1週間</option>
-      </select>
+      <form name="form1">
+        <select name="term">
+          <option value=distance>全期間の距離</option>
+          <option value=distbymonth>直近1か月の距離</option>
+          <option value=distbyweek>直近1週間の距離</option>
+          <option value=avg>一日当たりの距離の平均</option>
+          <option value=continuation>継続日数</option>
+          <option value=maxcontinuation>今までで一番継続した日数</option>
+        </select>
 
-      <!-- レベルのセレクタ -->
-      <select name="level" id="">
-        <option value="AllRank" id="AllRank">全てのランク</option>
-        <option value="beginner" id="beginner">初級者</option>
-        <option value="intermediate" id="intermediate">中級者</option>
-        <option value="advanced" id="advanced">上級者</option>
-      </select>
+        <!-- レベルのセレクタ -->
+        <select name="LevelSelect">
+          <option value=0>全てのランク</option>
+          <option value=1>初級者</option>
+          <option value=2>中級者</option>
+          <option value=3>上級者</option>
+        </select>
+      </form>
+
       <ul id="RankingList">
 
         <!-- <li class="RankingContainer">
