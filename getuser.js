@@ -49,7 +49,7 @@ const getUser  = async (uid,targetuid) => {
     }
 
     data.betrp.lastbet = data.betrp.lastbet.toDate()
-    var senddata = 
+    const senddata = 
     {
         name:data.name,
         birthday:data.birthday.toDate(),
