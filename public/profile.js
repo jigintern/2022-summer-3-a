@@ -50,20 +50,6 @@ function toDateTime(secs) {
   return t;
 }
 
-const response = await fetch("/user", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    uid: auth.currentUser.uid,
-    position: {
-      lat: lat, //緯度
-      lng: lng, //経度
-    },
-    time: time,
-    status: "start",
-  }),
-});
-
 // Get the modal
 var modal = document.getElementById("bet_modal");
 
