@@ -107,7 +107,7 @@ body{
     color: #5E72E4;
   }
 
-
+/* ランキング */
   .RankingList{
     counter-reset: chapter;
     background-color: #fff;
@@ -121,7 +121,6 @@ body{
     padding-bottom: 20px;
     border-bottom: 1px dashed #cde2e8;
     list-style: none;
-    background-color: #cde2e8;
   }
 
   .RankingList li::before {
@@ -130,14 +129,15 @@ body{
     margin: 20px 10px;
     padding:10px;
     border-radius: 50px;
-    color: #fff;
+    color: rgb(212, 21, 21);
     text-align: center;
     font-weight: bold;
+    font-size: 40px;
   }
 
   #name{
     margin:15px 15px 15px 5px;
-    font-size: 30px;
+    font-size: 20px;
   }
 
   #UserStatus{

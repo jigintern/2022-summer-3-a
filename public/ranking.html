@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="ranking.css">
+    <script type="module" src="./ranking.js"></script>
     <title>ランキングページ</title>
 </head>
 <body>
@@ -50,19 +51,19 @@
       <!-- 自分のステータス(ownranks) -->
       <div class="OwnRankingContainer">
         <div id="OwnStatus">
-          <div id="MyName"></div>
+          <p id="MyName"></p>
           <a id="OwnUid" href=""></a>
         </div>
         <div id="Achievement">
-          <div id="OwnLevel"></div>
-          <div id="OwnContinuation"></div>
-          <div id="OwnDistance"></div>
-          <div id="OwnRank"></div>
+          <p id="OwnLevel"></p>
+          <p id="OwnContinuation"></p>
+          <p id="OwnDistance"></p>
+          <p id="OwnRank"></p>
         </div>
       </div>
 
       <!-- ランキング -->
-      <ol class="RankingList">
+      <ul class="RankingList">
 
         <!-- <li class="RankingContainer">
           <div class="UserStatus">
@@ -76,7 +77,7 @@
           </div>
         </li> -->
 
-      </ol>
+      </ul>
 
 
 </body>

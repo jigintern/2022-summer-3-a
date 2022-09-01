@@ -1,14 +1,14 @@
 window.onload = async (event) => {
   // jsonの受け取り
-  const response = await fetch("/ranking");
+  const response = await fetch("/users?key=distance&uid=testid1&level=1");
   const rank_para = await response.json()
 
-  // 自分のステータス(ownranks)
-  const Ownname = document.querySelector("#MyName");
-  Ownname.innerText = `${rank_para.ownranks.name}`;
+  // 自分のステータス(ownrank)
+  const OwnName = document.querySelector("#MyName");
+  OwnName.innerText = `${rank_para.ownrank.name}`;
 
   const OwnId = document.querySelector("#OwnUid");
-  OwnId.innerText = `${rank_para.ownranks.uid}`;
+  OwnId.innerText = `${rank_para.ownrank.uid}`;
 
   const OwnLevel = document.querySelector("#OwnLevel");
   if (OwnLevel == 1) {
@@ -22,13 +22,13 @@ window.onload = async (event) => {
   }
 
   const OwnContinuation = document.querySelector("#OwnContinuation");
-  OwnContinuation.innerText = `継続日数${rank_para.ownranks.continuation}`;
+  OwnContinuation.innerText = `継続日数${rank_para.ownrank.continuation}`;
 
   const OwnDistance = document.querySelector("#OwnDistance");
-  OwnDistance.innerText = `${rank_para.ownranks.distance}km走りました!`;
+  OwnDistance.innerText = `${rank_para.ownrank.distance}km走りました!`;
 
   const OwnRank = document.querySelector("#OwnRank");
-  OwnRank.innerText = `${rank_para.ownranks.rank}位`;
+  OwnRank.innerText = `${rank_para.ownrank.rank}位`;
 
 
   //ランキング
