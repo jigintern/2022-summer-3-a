@@ -3,9 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase
 import {
   getAuth,
   onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
 } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
 
 const firebaseConfig = {
