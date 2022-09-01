@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="ranking.css">
+    <script type="module" src="./ranking.js"></script>
     <title>ランキングページ</title>
 </head>
 <body>
@@ -34,29 +35,50 @@
         </div>
       </header>
 
+      <!-- 期間のセレクタ -->
       <select name="term" id="">
         <option value="month">直近1か月</option>
         <option value="week">直近1週間</option>
       </select>
 
+      <!-- レベルのセレクタ -->
       <select name="level" id="">
         <option value="beginner">初級者</option>
         <option value="intermediate">中級者</option>
         <option value="advanced">上級者</option>
       </select>
 
+      <!-- 自分のステータス(ownranks) -->
+      <div class="OwnRankingContainer">
+        <div id="OwnStatus">
+          <p id="MyName"></p>
+          <a id="OwnUid" href=""></a>
+        </div>
+        <div id="Achievement">
+          <p id="OwnLevel"></p>
+          <p id="OwnContinuation"></p>
+          <p id="OwnDistance"></p>
+          <p id="OwnRank"></p>
+        </div>
+      </div>
+
+      <!-- ランキング -->
       <ul class="RankingList">
-        <li class="RankingContainer">
-          <div id="UserStatus">
-            <div id="name">John Doe</div>
-            <div id="uid" href="">John_Doe_242</div>
+
+        <!-- <li class="RankingContainer">
+          <div class="UserStatus">
+            <p class="Uname">John Doe</p>
+            <a class="Uid" href="">John_Doe_242</a>
           </div>
-          <div id="UserAchievement">
-            <div id="level">level 3</div>
-            <div id="contuition">12日</div>
-            <div id="distance">324km</div>
+          <div class="UserAchievement">
+            <p class="level">level 3</p>
+            <p class="continuation">12日</p>
+            <p class="distance">324km</p>
           </div>
-        </li>
+        </li> -->
+
       </ul>
+
+
 </body>
 </html>
