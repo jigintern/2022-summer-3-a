@@ -34,6 +34,10 @@ const getUser  = async (uid,targetuid) => {
         }
     }
     data.isgamble = isgamble;
+    data.birthday = data.birthday.toDate()
+    data.lastrun = data.lastrun.toDate()
+    data.betdate = data.betdate.toDate()
+    data.betrp.lastbet = data.betrp.lastbet.toDate()
     return new Response(JSON.stringify(data), 
         {
         headers: {

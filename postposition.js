@@ -67,13 +67,13 @@ const postPosition  = async(req) => {
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
-            data.runninglog[datekey].time += req.time;
+            data.runninglog[datekey].time += req.time/100;
         }
         else
         {
             data.runninglog[datekey]={
                 "distance" : distance,
-                "time" : req.time
+                "time" : req.time/100
             }
         }
         let cleardist = 0
