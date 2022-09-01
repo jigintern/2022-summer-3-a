@@ -124,11 +124,11 @@ const postPosition  = async(req) => {
                 data.continuation = 0;
             }
         }
-        else if(data.runninglog[pastdatekey]== null && data.runninglog[datekey].cleared)
+        else if(data.runninglog[pastdatekey] === null && data.runninglog[datekey].cleared)
         {
             data.continuation = 1;
         }
-        else if(data.runninglog[pastdatekey]== null)
+        else if(data.runninglog[pastdatekey] === null)
         {
             data.continuation = 0;
         }
