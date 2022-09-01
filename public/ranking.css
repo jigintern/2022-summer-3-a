@@ -108,7 +108,7 @@ body{
   }
 
 
-  .RankingList .OwnRankingContainer{
+  .RankingList{
     counter-reset: chapter;
     background-color: #fff;
     border-radius: 50px;
@@ -124,13 +124,12 @@ body{
     background-color: #cde2e8;
   }
 
-  .RankingList li:before {
-    content: counter(chapter) " 位";
+  .RankingList li::before {
     counter-increment: chapter;
+    content: counter(chapter) "位";
     margin: 20px 10px;
     padding:10px;
     border-radius: 50px;
-    background: #fff;
     color: #fff;
     text-align: center;
     font-weight: bold;
