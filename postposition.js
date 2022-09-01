@@ -90,7 +90,7 @@ const postPosition  = async(req) => {
         if(data.runninglog[pastdatekey]!= null && !seriestoday)
         {
             data.continuation += 1;
-            if(data.maxcontinuation<data.continuation)
+            if(data.maxcontinuation < data.continuation)
             {
                 data.maxcontinuation = data.continuation
             }
