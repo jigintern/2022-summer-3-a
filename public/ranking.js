@@ -27,7 +27,6 @@ onAuthStateChanged(auth, (user) => {
     const selectTerm = document.querySelector('[name="term"]');
     const selectLevel = document.querySelector('[name="LevelSelect"]');
     ChangeRanking(selectTerm, selectLevel, user.uid);
-    console.log("aaa");
 
     selectTerm.onchange = async (event) => {
       ChangeRanking(selectTerm, selectLevel, user.uid);
@@ -48,6 +47,10 @@ const getCurrentPosition = (options) => {
 }
 
 async function ChangeRanking(selectTerm, selectLevel, uid) {
+  const node = document.getElementById("RankingList");
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
     //セレクタによる場合分け
     //レベルごと
     const LevelSelect = document.form1.LevelSelect;
@@ -60,33 +63,32 @@ async function ChangeRanking(selectTerm, selectLevel, uid) {
 
   // jsonの受け取り
   const path = `/users?key=${selectTerm.value}&uid=${uid}&level=${selectLevel.value}`
-  console.log(path);
   const response = await fetch(path);
   const rank_para = await response.json();
 
   // 自分のステータス(ownrank)
   const OwnName = document.querySelector("#MyName");
-  OwnName.innerText = `ユーザ名: ${rank_para.ownranks.name}`;
+  OwnName.innerText = `ユーザ名: ${rank_para.ownrank.name}`;
 
   const OwnLevel = document.querySelector("#OwnLevel");
-  if (rank_para.ownranks.level == 1) {
+  if (rank_para.ownrank.level == 1) {
     OwnLevel.innerText = "初級者";
   }
-  else if (rank_para.ownranks.level == 2) {
+  else if (rank_para.ownrank.level == 2) {
     OwnLevel.innerText = "中級者";
   }
-  else if (rank_para.ownranks.level == 3) {
+  else if (rank_para.ownrank.level == 3) {
     OwnLevel.innerText = "上級者";
   }
 
   const OwnContinuation = document.querySelector("#OwnContinuation");
-  OwnContinuation.innerText = `継続日数: ${rank_para.ownranks.continuation}`;
+  OwnContinuation.innerText = `継続日数: ${rank_para.ownrank.continuation}`;
 
   const OwnDistance = document.querySelector("#OwnDistance");
-  OwnDistance.innerText = `${rank_para.ownranks.distance}km走りました!`;
+  OwnDistance.innerText = `${rank_para.ownrank.distance}km走りました!`;
 
   const OwnRank = document.querySelector("#OwnRank");
-  OwnRank.innerText = `${rank_para.ownranks.rank}位`;
+  OwnRank.innerText = `${rank_para.ownrank.rank}位`;
 
 
   //ランキング
