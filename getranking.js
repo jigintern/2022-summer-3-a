@@ -159,7 +159,7 @@ const getUsers  = async (uid,key,level) => {
     })
     const res = {
         rankers:users,
-        ownranks:own
+        ownrank:own
     }
     return new Response(JSON.stringify(res),{
         headers:{
