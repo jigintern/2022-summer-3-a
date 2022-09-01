@@ -2,10 +2,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
 } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+import L from "https://code4sabae.github.io/leaflet-mjs/leaflet.mjs";
+import { LeafletSprite } from "https://taisukef.github.io/leaflet.sprite-es/src/sprite.js";
+LeafletSprite.init(L);
+var map = L.map('mapcontainer', { zoomControl: false });
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
@@ -25,6 +26,8 @@ const getCurrentPosition = (options) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, options)
     })
   }
+var startTime = 0;
+
 var time = 0;
 var timerLabel = document.getElementsByClassName('timerLabel')[0];
 var startBtn = document.getElementsByClassName('sampleButton-ok')[0];
@@ -57,20 +60,15 @@ async function start() {
 
         });
         const user_distance = await response.json();
-
         const para = document.querySelector("#previousDistance");
         para.innerText = `走行距離：${user_distance.distance}`;
     }
-    else if(time % 2000 == 0)
-    {
-        navigator.geolocation.getCurrentPosition((position) => {
-            //緯度
-            lat = position.coords.latitude;
-            //経度
-            lng = position.coords.longitude;
-        });
-    }
     else if (time % 3000 == 0) {
+        let pos_data = await getCurrentPosition();
+        lat = pos_data.coords.latitude;
+        lng = pos_data.coords.longitude;
+        var gettedTime = Math.floor((performance.now()-startTime)/10)/100;
+        
         const response = await fetch("/position", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -87,12 +85,16 @@ async function start() {
 
         });
         const user_distance = await response.json();
+        const displaydis = Math.floor(user_distance.distance);
+        map.setView([lat, lng], 16);
+        var popup1 = L.popup({ maxWidth: 550 }).setContent(`${gettedTime}秒地点<br>総走行距離 ${displaydis}m`);
+        L.marker([lat,lng]).bindPopup(popup1).addTo(map);
 
         const para = document.querySelector("#previousDistance");
         para.innerText = `走行距離：${user_distance.distance}`;
     }
-    // timeをsetTimeoutで設定したミリ秒ごとに1プラスする
-    time++;
+    //timeは10msec単位で、performance.now()は1msec単位になっている
+    time = Math.floor((performance.now()-startTime)/10);
 
     //分・秒・ミリ秒を計算
     var min = Math.floor(time/100/60)
@@ -110,13 +112,13 @@ async function start() {
     id = setTimeout(start, 10);
 }
 
-
-
 // STOPボタン
 async function stop() {
     // 停止する
     clearTimeout(id);
-    
+    let pos_data = await getCurrentPosition();
+    lat = pos_data.coords.latitude;
+    lng = pos_data.coords.longitude;
     const response = await fetch("/position", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -133,13 +135,31 @@ async function stop() {
 
     });
     const user_distance = await response.json();
+    const displaydis = Math.floor(user_distance.distance);
+    var gettedTime = Math.floor(time)/100;
+    map.setView([lat, lng], 16);
+    var popup1 = L.popup({ maxWidth: 550 }).setContent(`終了地点<br>${gettedTime}秒地点<br>総走行距離 ${displaydis}m`);
+    L.marker([lat,lng]).bindPopup(popup1).addTo(map);
 
     const para = document.querySelector("#previousDistance");
     para.innerText = `走行距離：${user_distance.distance}`;
 }
 
 function click() {
-    if (running) { running = false; stop() } else { running = true; start() }
+    if (running) { running = false; stop() } else { 
+        running = true; 
+        start();
+        startTime = performance.now(); 
+        time = 0;
+        map.setView([lat, lng], 16);
+        L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+            attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
+        }).addTo(map);
+        L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
+        L.control.zoom({ position: 'bottomleft' }).addTo(map);
+        var popup1 = L.popup({ maxWidth: 550 }).setContent(`出発地点`);
+        L.marker([lat,lng]).bindPopup(popup1).addTo(map);
+    }
 }
 // RESETボタン
 function reset() {
@@ -150,6 +170,20 @@ function reset() {
     // タイマーラベルをリセット
     timerLabel.innerHTML = '00:00:00';
 }
+window.onload = async (event) => {
+    map.setView([35.943306, 136.200500], 10);
+    L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+        attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
+    }).addTo(map);
+    L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
+    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    let pos_data = await getCurrentPosition();
+    lat = pos_data.coords.latitude;
+    lng = pos_data.coords.longitude;
+    map.setView([lat, lng], 16);
+    
+
+  };
 
 // クリックした時の処理
 button.addEventListener('click', click)
