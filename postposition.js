@@ -77,7 +77,7 @@ const postPosition  = async(req) => {
         {
             data.runninglog[datekey].distance += distance;
             data.runninglog[datekey].time += req.time/100;
-            donetoday = data.runninglog[datekey].cleard;
+            donetoday = data.runninglog[datekey].cleared;
         }
         else
         {
@@ -102,12 +102,12 @@ const postPosition  = async(req) => {
             cleardist = 7000;
         }
         
-        if(distance >= cleardist) data.runninglog[datekey].cleard = true;
-        else data.runninglog[datekey].cleard = false;
+        if(distance >= cleardist) data.runninglog[datekey].cleared = true;
+        else data.runninglog[datekey].cleared = false;
         
         if(data.runninglog[pastdatekey] != null && !donetoday)
         {
-            if(data.runninglog[datekey].clead && data.runninglog[pastdatekey].clead)
+            if(data.runninglog[datekey].cleared && data.runninglog[pastdatekey].cleared)
             {
                 data.continuation += 1;
                 if(data.maxcontinuation < data.continuation)
@@ -115,16 +115,16 @@ const postPosition  = async(req) => {
                     data.maxcontinuation = data.continuation
                 }
             }
-            else if(data.runninglog[datekey].clead && !data.runninglog[pastdatekey].clead)
+            else if(data.runninglog[datekey].cleared && !data.runninglog[pastdatekey].cleared)
             {
                 data.continuation = 1;
             }
-            else if(!data.runninglog[datekey].clead && !data.runninglog[pastdatekey].clead)
+            else if(!data.runninglog[datekey].cleared && !data.runninglog[pastdatekey].cleared)
             {
                 data.continuation = 0;
             }
         }
-        else if(data.runninglog[pastdatekey]== null && data.runninglog[datekey].cleard)
+        else if(data.runninglog[pastdatekey]== null && data.runninglog[datekey].cleared)
         {
             data.continuation = 1;
         }
