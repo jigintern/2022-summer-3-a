@@ -108,7 +108,7 @@ body{
   }
 
 
-  .RankingList .OwnRankingContainer .RankingContainer{
+  .RankingList .OwnRankingContainer{
     counter-reset: chapter;
     background-color: #fff;
     border-radius: 50px;
@@ -121,6 +121,7 @@ body{
     padding-bottom: 20px;
     border-bottom: 1px dashed #cde2e8;
     list-style: none;
+    background-color: #cde2e8;
   }
 
   .RankingList li:before {
