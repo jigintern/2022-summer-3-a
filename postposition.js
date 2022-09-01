@@ -60,14 +60,23 @@ const postPosition  = async(req) => {
         date = ("0" + date).slice(-2);
         
         const datekey = year + "-" + month + "-" + date;
+
+        st.setDate(st.getDate()-1);
+        var pyear = st.getFullYear();
+        var pmonth = st.getMonth() + 1 ;
+        var pdate = st.getDate() ;
+        pmonth = ("0" + pmonth).slice(-2);
+        pdate = ("0" + pdate).slice(-2)
+        const pastdatekey = pyear + "-" + pmonth + "-" + pdate;
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
-        
+        var donetoday = false;
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
             data.runninglog[datekey].time += req.time/100;
+            donetoday = data.runninglog[datekey].cleared;
         }
         else
         {
@@ -76,6 +85,8 @@ const postPosition  = async(req) => {
                 "time" : req.time/100
             }
         }
+
+        
         let cleardist = 0
         if(data.level === 1)
         {
@@ -90,8 +101,36 @@ const postPosition  = async(req) => {
             cleardist = 7000;
         }
         
-        if(distance >= cleardist) data.runninglog[datekey].cleard = true;
-        else data.runninglog[datekey].cleard = false;
+        if(distance >= cleardist) data.runninglog[datekey].cleared = true;
+        else data.runninglog[datekey].cleared = false;
+        
+        if(data.runninglog[pastdatekey] != null && !donetoday)
+        {
+            if(data.runninglog[datekey].cleared && data.runninglog[pastdatekey].cleared)
+            {
+                data.continuation += 1;
+                if(data.maxcontinuation < data.continuation)
+                {
+                    data.maxcontinuation = data.continuation
+                }
+            }
+            else if(data.runninglog[datekey].cleared && !data.runninglog[pastdatekey].cleared)
+            {
+                data.continuation = 1;
+            }
+            else if(!data.runninglog[datekey].cleared && !data.runninglog[pastdatekey].cleared)
+            {
+                data.continuation = 0;
+            }
+        }
+        else if(data.runninglog[pastdatekey] === null && data.runninglog[datekey].cleared)
+        {
+            data.continuation = 1;
+        }
+        else if(data.runninglog[pastdatekey] === null)
+        {
+            data.continuation = 0;
+        }
         
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
