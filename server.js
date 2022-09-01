@@ -15,7 +15,6 @@ serve(async (req) => {
         return new Response("jigインターンへようこそ！");
     }
     if(req.method === "GET" && pathname === "/user"){
-        console.log(url.searchParams.get("uid"))
         const res = await getUser(url.searchParams.get("uid"),url.searchParams.get("targetuid"))
         return res
     }else if(req.method === "POST" && pathname === "/user"){
