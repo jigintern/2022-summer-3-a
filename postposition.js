@@ -60,14 +60,24 @@ const postPosition  = async(req) => {
         date = ("0" + date).slice(-2);
         
         const datekey = year + "-" + month + "-" + date;
+
+        st.setDate(st.getDate()-1);
+        var pyear = st.getFullYear();
+        var pmonth = st.getMonth() + 1 ;
+        var pdate = st.getDate() ;
+        pmonth = ("0" + pmonth).slice(-2);
+        pdate = ("0" + pdate).slice(-2)
+        const pastdatekey = pyear + "-" + month + "-" + date;
+
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
-        
+        var seriestoday = false;
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
             data.runninglog[datekey].time += req.time/100;
+            seriestoday = true;
         }
         else
         {
@@ -75,6 +85,19 @@ const postPosition  = async(req) => {
                 "distance" : distance,
                 "time" : req.time/100
             }
+        }
+
+        if(data.runninglog[pastdatekey]!= null && !seriestoday)
+        {
+            data.continuation += 1;
+            if(data.maxcontinuation<data.continuation)
+            {
+                data.maxcontinuation = data.continuation
+            }
+        }
+        else if(data.runninglog[pastdatekey]== null)
+        {
+            data.continuation = 1;
         }
         let cleardist = 0
         if(data.level === 1)
