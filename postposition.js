@@ -87,18 +87,7 @@ const postPosition  = async(req) => {
             }
         }
 
-        if(data.runninglog[pastdatekey]!= null && !seriestoday)
-        {
-            data.continuation += 1;
-            if(data.maxcontinuation < data.continuation)
-            {
-                data.maxcontinuation = data.continuation
-            }
-        }
-        else if(data.runninglog[pastdatekey]== null)
-        {
-            data.continuation = 1;
-        }
+        
         let cleardist = 0
         if(data.level === 1)
         {
@@ -115,6 +104,19 @@ const postPosition  = async(req) => {
         
         if(distance >= cleardist) data.runninglog[datekey].cleard = true;
         else data.runninglog[datekey].cleard = false;
+
+        if(data.runninglog[pastdatekey]!= null && !seriestoday && data.runninglog[datekey].cleard)
+        {
+            data.continuation += 1;
+            if(data.maxcontinuation < data.continuation)
+            {
+                data.maxcontinuation = data.continuation
+            }
+        }
+        else if(data.runninglog[pastdatekey]== null)
+        {
+            data.continuation = 1;
+        }
         
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
