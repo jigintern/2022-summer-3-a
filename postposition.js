@@ -67,8 +67,7 @@ const postPosition  = async(req) => {
         var pdate = st.getDate() ;
         pmonth = ("0" + pmonth).slice(-2);
         pdate = ("0" + pdate).slice(-2)
-        const pastdatekey = pyear + "-" + month + "-" + date;
-
+        const pastdatekey = pyear + "-" + pmonth + "-" + pdate;
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
