@@ -20,7 +20,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
+const getCurrentPosition = (options) => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    })
+  }
 var time = 0;
 var timerLabel = document.getElementsByClassName('timerLabel')[0];
 var startBtn = document.getElementsByClassName('sampleButton-ok')[0];
@@ -33,19 +37,15 @@ var lng = 0;
 
 // STARTボタン
 async function start() {
-    console.log("hello");
     if (time == 0) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            //緯度
-            lat = position.coords.latitude;
-            //経度
-            lng = position.coords.longitude;
-        });
+        let pos_data = await getCurrentPosition();
+        lat = pos_data.coords.latitude;
+        lng = pos_data.coords.longitude;
         const response = await fetch("/position", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":auth.uid,
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -56,20 +56,26 @@ async function start() {
             })
 
         });
-    }
+        const user_distance = await response.json();
 
-    else if (time % 3000 == 0) {
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
+    }
+    else if(time % 2000 == 0)
+    {
         navigator.geolocation.getCurrentPosition((position) => {
             //緯度
             lat = position.coords.latitude;
             //経度
             lng = position.coords.longitude;
         });
+    }
+    else if (time % 3000 == 0) {
         const response = await fetch("/position", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "uid":auth.uid,
+                "uid":auth.currentUser.uid,
                 "position":
                 {
                     "lat":lat,//緯度
@@ -80,6 +86,10 @@ async function start() {
             })
 
         });
+        const user_distance = await response.json();
+
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：${user_distance.distance}`;
     }
     // timeをsetTimeoutで設定したミリ秒ごとに1プラスする
     time++;
@@ -100,21 +110,18 @@ async function start() {
     id = setTimeout(start, 10);
 }
 
+
+
 // STOPボタン
 async function stop() {
     // 停止する
     clearTimeout(id);
-    navigator.geolocation.getCurrentPosition((position) => {
-        //緯度
-        lat = position.coords.latitude;
-        //経度
-        lng = position.coords.longitude;
-    });
+    
     const response = await fetch("/position", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            "uid": auth.uid,
+            "uid": auth.currentUser.uid,
             "position":
             {
                 "lat": lat,//緯度
@@ -125,6 +132,10 @@ async function stop() {
         })
 
     });
+    const user_distance = await response.json();
+
+    const para = document.querySelector("#previousDistance");
+    para.innerText = `走行距離：${user_distance.distance}`;
 }
 
 function click() {
@@ -143,3 +154,5 @@ function reset() {
 // クリックした時の処理
 button.addEventListener('click', click)
 resetBtn.addEventListener('click', reset); // RESETボタン
+
+

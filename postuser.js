@@ -31,7 +31,7 @@ const postUser  = async (data) => {
             maxcontinuation:0,
             name:data.name,
             rp:1000,
-            runninglog:[]
+            runninglog:{}
         }
         setDoc(userRef,user)
     }

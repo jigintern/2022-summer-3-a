@@ -28,6 +28,7 @@ serve(async (req) => {
         return res
     }else if(req.method === "GET" && pathname === "/users"){
         const res = await getUsers(url.searchParams.get("uid"),url.searchParams.get("key"),url.searchParams.get("level"))
+
         return res
     }else if(req.method === "GET" && pathname === "/liquidation"){
         const res = await liquidate(url.searchParams.get("uid"))

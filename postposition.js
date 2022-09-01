@@ -1,7 +1,8 @@
 import {
 getDoc,
 setDoc,
-doc,Timestamp
+doc,
+Timestamp,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore-lite.js";
 import db from "./firebase.js";
 
@@ -16,7 +17,10 @@ const postPosition  = async(req) => {
     let plng; //一つ前の経度
     let positions; //
     let starttime;
+    const docRef = doc(db, "distances", uid);
+    const docSnap = await getDoc(docRef);
     const distancesRef = doc(db,"distances",uid);
+    
     if(status !== "start")
     {
         await getDoc(distancesRef).then(doc => {
@@ -28,16 +32,18 @@ const postPosition  = async(req) => {
             plng = pposition.lng * Math.PI/180;
             distance = doc.data()["distance"];
         });
+        if(plat == lat && plng == lng) movedDistance = 0;
+        else
         var movedDistance = 
             6371 * 1000 *
             Math.acos(Math.cos(lat) * Math.cos(plat) * Math.cos(plng - lng) + Math.sin(lat) * Math.sin(plat));
             distance += movedDistance;
-            positions.push( {"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI});
+            positions.push( {"lat":lat * 180/ Math.PI,"lng":lng * 180/ Math.PI});
     }
     else
     {
         distance = 0;
-        positions = [{"lat":lat * 180/ Math.PI,"lng":lat * 180/ Math.PI}];
+        positions = [{"lat":lat * 180/ Math.PI,"lng":lng * 180/ Math.PI}];
         starttime = Timestamp.now().toDate();
         
     }
@@ -57,6 +63,7 @@ const postPosition  = async(req) => {
         await getDoc(usersRef).then(doc => {
             data = doc.data();
         });
+        
         if(data.runninglog[datekey] != null)
         {
             data.runninglog[datekey].distance += distance;
@@ -69,6 +76,23 @@ const postPosition  = async(req) => {
                 "time" : req.time
             }
         }
+        let cleardist = 0
+        if(data.level === 1)
+        {
+            cleardist = 3000;
+        }
+        else if(data.level === 2)
+        {
+            cleardist = 5000;
+        }
+        else if(data.level === 3)
+        {
+            cleardist = 7000;
+        }
+        
+        if(distance >= cleardist) data.runninglog[datekey].cleard = true;
+        else data.runninglog[datekey].cleard = false;
+        
         data.lastrun = starttime;
         await setDoc(doc(db,"users",uid),data);
     }
@@ -78,6 +102,7 @@ const postPosition  = async(req) => {
         positions:positions,
         starttime:starttime
     }
+    
     await setDoc(doc(db,"distances",uid),data);
     return new Response(JSON.stringify({
             "positions":positions,
