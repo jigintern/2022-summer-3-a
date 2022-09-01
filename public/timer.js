@@ -41,6 +41,9 @@ var lng = 0;
 // STARTボタン
 async function start() {
     if (time == 0) {
+        timerLabel.innerHTML = '00:00:00';
+        const para = document.querySelector("#previousDistance");
+        para.innerText = `走行距離：0m`;
         let pos_data = await getCurrentPosition();
         lat = pos_data.coords.latitude;
         lng = pos_data.coords.longitude;
@@ -57,13 +60,12 @@ async function start() {
                 "time":time,
                 "status":"start"
             })
-
         });
         const user_distance = await response.json();
-        const para = document.querySelector("#previousDistance");
-        para.innerText = `走行距離：${user_distance.distance}`;
+        
+        para.innerText = `走行距離：${Math.floor(user_distance.distance)}m`;
     }
-    else if (time % 3000 == 0) {
+    else if (time % 3000 < 5) {
         let pos_data = await getCurrentPosition();
         lat = pos_data.coords.latitude;
         lng = pos_data.coords.longitude;
@@ -89,9 +91,14 @@ async function start() {
         map.setView([lat, lng], 16);
         var popup1 = L.popup({ maxWidth: 550 }).setContent(`${gettedTime}秒地点<br>総走行距離 ${displaydis}m`);
         L.marker([lat,lng]).bindPopup(popup1).addTo(map);
+        var poss = user_distance.positions;
+        var len = poss.length
+        var lines = [[poss[len-1].lat,poss[len-1].lng],[poss[len-2].lat,poss[len-2].lng]];
+        L.polyline(lines, { color: 'blue', weight: 5 }).addTo(map);
 
         const para = document.querySelector("#previousDistance");
-        para.innerText = `走行距離：${user_distance.distance}`;
+        
+        para.innerText = `走行距離：${displaydis}m`;
     }
     //timeは10msec単位で、performance.now()は1msec単位になっている
     time = Math.floor((performance.now()-startTime)/10);
@@ -132,7 +139,6 @@ async function stop() {
             "time": time,
             "status": "finish"
         })
-
     });
     const user_distance = await response.json();
     const displaydis = Math.floor(user_distance.distance);
@@ -140,9 +146,13 @@ async function stop() {
     map.setView([lat, lng], 16);
     var popup1 = L.popup({ maxWidth: 550 }).setContent(`終了地点<br>${gettedTime}秒地点<br>総走行距離 ${displaydis}m`);
     L.marker([lat,lng]).bindPopup(popup1).addTo(map);
+    var poss = user_distance.positions;
+    var len = poss.length
+    var lines = [[poss[len-1].lat,poss[len-1].lng],[poss[len-2].lat,poss[len-2].lng]];
+    L.polyline(lines, { color: 'blue', weight: 5 }).addTo(map);
 
     const para = document.querySelector("#previousDistance");
-    para.innerText = `走行距離：${user_distance.distance}`;
+    para.innerText = `走行距離：${displaydis}m`;
 }
 
 function click() {
@@ -151,6 +161,8 @@ function click() {
         start();
         startTime = performance.now(); 
         time = 0;
+        map.remove();
+        map = L.map('mapcontainer', { zoomControl: false });
         map.setView([lat, lng], 16);
         L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
             attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
@@ -171,7 +183,7 @@ function reset() {
     timerLabel.innerHTML = '00:00:00';
 }
 window.onload = async (event) => {
-    map.setView([35.943306, 136.200500], 10);
+    map.setView([35.943306, 136.200500], 12);
     L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
         attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
     }).addTo(map);
@@ -181,8 +193,6 @@ window.onload = async (event) => {
     lat = pos_data.coords.latitude;
     lng = pos_data.coords.longitude;
     map.setView([lat, lng], 16);
-    
-
   };
 
 // クリックした時の処理
