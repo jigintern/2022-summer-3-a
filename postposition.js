@@ -113,9 +113,13 @@ const postPosition  = async(req) => {
                 data.maxcontinuation = data.continuation
             }
         }
-        else if(data.runninglog[pastdatekey]== null)
+        else if(data.runninglog[pastdatekey]== null && data.runninglog[datekey].cleard)
         {
             data.continuation = 1;
+        }
+        else if(data.runninglog[pastdatekey]== null)
+        {
+            data.continuation = 0;
         }
         
         data.lastrun = starttime;
