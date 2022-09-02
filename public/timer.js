@@ -164,8 +164,8 @@ function click() {
         map.remove();
         map = L.map('mapcontainer', { zoomControl: false });
         map.setView([lat, lng], 16);
-        L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
-            attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
+        L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+            attribution: "<a href='https://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
         }).addTo(map);
         L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
