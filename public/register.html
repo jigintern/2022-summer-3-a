@@ -7,14 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-        <p>名前</p>
-        <input type="text" id="name">
-        <p>誕生日</p>
-        <input type="date" id="birthday">
-        <p>レベル（1〜3）</p>
-        <input type="number" name ="level" id="level">
-        <p>送信</p>
-        <input type="submit" name="submit" id="submit">
+        <form id="profileform">
+            <p>名前</p>
+            <input type="text" id="name" required>
+            <p>誕生日</p>
+            <input type="date" id="birthday" required>
+            <p>レベル（1〜3）</p>
+            <input type="number" name ="level" id="level" required>
+            <p>送信</p>
+            <input type="submit" name="submit" id="submit" required>
+        </form>
     <script type="module" src="./register.js">
     </script>
 </body>
