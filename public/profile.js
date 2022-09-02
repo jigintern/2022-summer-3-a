@@ -95,6 +95,11 @@ bet.onclick = async function () {
       wager: Number(wager),
     }),
   });
+  if (response.status === 200) {
+    alert("賭けました！");
+    document.getElementById("wager").value = "";
+    modal.style.display = "none";
+  }
   if (response.status === 400) {
     alert(await response.text());
     return;
@@ -113,14 +118,14 @@ function getParam(name, url) {
 }
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
-  document.getElementById("wagger").value = "";
+  document.getElementById("wager").value = "";
   modal.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
-    document.getElementById("wagger").value = "";
+    document.getElementById("wager").value = "";
     modal.style.display = "none";
   }
 };
