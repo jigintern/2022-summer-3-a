@@ -41,7 +41,7 @@ onAuthStateChanged(auth, async (user) => {
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
     user_rp.value = jsondata.rp;
-    user_birthday.value = jsondata.birthday;
+    user_birthday.value = jsondata.birthday.split("T")[0];
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
   } else {
