@@ -106,7 +106,7 @@ async function ChangeRanking(selectTerm, selectLevel, uid) {
     //p class=Unameの作成
     let Uname = document.createElement('a');
     Uname.className = `Uname${i}`;
-    Uname.href = `/profile.html?targetuid=${element.uid}`
+    Uname.href = `/profile.html?targetid=${element.uid}`
     UserStatus.appendChild(Uname);
 
     //div class=UserAchievementの作成
