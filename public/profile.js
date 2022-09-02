@@ -40,6 +40,10 @@ onAuthStateChanged(auth, async (user) => {
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
+    const today = new Date(new Date().setHours(0, 0, 0, 0))
+    if(today.getTime() > new Date(jsondata.lastgamble).getTime() && targetuid === uid && jsondata.gambling.length){
+      document.getElementById("liquidation").disabled = false;
+    }
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
     user_rp.value = jsondata.rp;
