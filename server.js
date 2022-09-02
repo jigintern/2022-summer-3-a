@@ -15,7 +15,6 @@ serve(async (req) => {
     if (req.method === "GET" && pathname === "/welcome-message") {
         return new Response("jigインターンへようこそ！");
     }
-    
     if(req.method === "GET" && pathname === "/user"){
         const res = await getUser(url.searchParams.get("uid"),url.searchParams.get("targetuid"))
         return res
@@ -39,7 +38,7 @@ serve(async (req) => {
         const res = await betUser(reqJson)
         return res
     }else if(req.method === "GET" && pathname === "/exists"){
-        const res = await exists(url.searchParams.get(uid))
+        const res = await exists(url.searchParams.get("uid"))
         return res;
     }
 

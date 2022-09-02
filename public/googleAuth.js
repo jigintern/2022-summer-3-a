@@ -7,7 +7,6 @@ import {
   onAuthStateChanged,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import exists from "../exists";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
@@ -35,14 +34,16 @@ async function GoogleLogin() {
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log(result.user.uid)
-      const res = await fetch(`/exists?uid=${result.user.uid}`)
-      const jsondata = await res.json();
-      if(jsondata.exists){
-        window.location.href = "top.html";
-      }
-      else{
-        window.location.href = "register.html"
-      }
+      fetch(`/exists?uid=${result.user.uid}`)
+        .then(res => res.json())
+        .then(data => {
+          if(data.exists){
+            window.location.href = "top.html";
+          }
+          else{
+            window.location.href = "register.html"
+          }
+        })
     })
     .catch((error) => {
       // Handle Errors here.
