@@ -175,8 +175,10 @@ const config = {
       animateScale: true,
       animateRotate: true,
       onComplete: function () {
-        var cx = canvas.width / 2;
-        var cy = canvas.height / 2;
+        var cx = canvas.width / 4;
+        var cy = canvas.height / 4;
+        console.log(cx);
+        console.log(cy);
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.font = "16px verdana";
