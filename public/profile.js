@@ -24,18 +24,18 @@ const betFail = document.getElementById("bet_fail");
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const uid = user.uid;
-    console.log(user.uid);
-
-    const path = `/user?uid=${uid}&targetuid=${uid}`;
+    let targetuid = getParam("targetid");
+    if (targetuid == null) {
+      targetuid = uid;
+    }
+    const path = `/user?uid=${uid}&targetuid=${targetuid}`;
     const res = await fetch(path, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
-    console.log(jsondata);
     user_name.placeholder = jsondata.name;
-    level.value = jsondata.level;
-    console.log(toDateTime(jsondata.birthday.seconds));
+    user_level.value = jsondata.level;
     user_birthday.value = toDateTime(jsondata.birthday.seconds);
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
@@ -53,25 +53,66 @@ function toDateTime(secs) {
 // Get the modal
 var modal = document.getElementById("bet_modal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("bet_btn");
+// Get the bet button
+var bet = document.getElementById("bet");
+
+// Flag Bet
+var betting;
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
+// Get bet value
+
 // When the user clicks on the button, open the modal
-btn.onclick = function () {
+betClear.onclick = function () {
   modal.style.display = "block";
+  betting = true;
+};
+betFail.onclick = function () {
+  modal.style.display = "block";
+  betting = false;
 };
 
+bet.onclick = async function () {
+  let wager = document.getElementById("wager").value;
+  let targetuid = getParam("targetid");
+  const response = await fetch("/bet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      uid: auth.currentUser.uid,
+      targetid: targetuid,
+      betting: betting,
+      wager: Number(wager),
+    }),
+  });
+  if (response.status === 400) {
+    alert(await response.text());
+    return;
+  }
+};
+//urlのクエリパラメータを取得する関数
+//https://www-creators.com/archives/4463
+function getParam(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
+  document.getElementById("wagger").value = "";
   modal.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
+    document.getElementById("wagger").value = "";
     modal.style.display = "none";
   }
 };

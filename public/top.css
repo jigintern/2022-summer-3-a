@@ -163,6 +163,7 @@ h1{
   text-align: center;
   width:90%;
   padding-top:90%;
+  max-height: none;
 }
 #previousDistance{
   margin:5px;
