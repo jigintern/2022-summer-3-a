@@ -6,6 +6,7 @@ import betUser from "./betuser.js"
 import liquidate from "./liquidate.js"
 import postUser from "./postuser.js"
 import getUsers from "./getranking.js"
+import exists from "./exists.js"
 
 serve(async (req) => {
     const url = new URL(req.url)
@@ -36,6 +37,9 @@ serve(async (req) => {
         const reqJson = await req.json()
         const res = await betUser(reqJson)
         return res
+    }else if(req.method === "GET" && pathname === "/exists"){
+        const res = await exists(url.searchParams.get("uid"))
+        return res;
     }
 
     return serveDir(req, {
