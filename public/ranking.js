@@ -34,7 +34,7 @@ onAuthStateChanged(auth, (user) => {
     };
   }
   else {
-    console.log("not login");
+    window.location.href('index.html');
   }
 })
 const getCurrentPosition = (options) => {
