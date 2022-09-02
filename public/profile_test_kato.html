@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="modal.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="header">
+      <a href="top.html"><i class="fa fa-arrow-left"></i></a>
+      <a href="#" id="edit"><i class="fas fa-edit"></i></a>
+    </div>
+    <div class="container">
+      <div class="title">プロフィール</div>
+      <div class="content">
+        <form action="#">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">名前</span>
+              <input id="name" type="text" placeholder="名前" />
+            </div>
+            <div class="input-box">
+              <span class="details">レベル</span>
+              <select name="level" id="level">
+                <option value="1">初級</option>
+                <option value="2">中級</option>
+                <option value="3">上級</option>
+              </select>
+            </div>
+            <div class="input-box">
+              <span class="details">生年月日</span>
+              <input type="date" id="birthday" name="birthday" />
+            </div>
+            <div class="input-box">
+              <span class="details">ミッションの状況</span>
+              <div class="chart-wrapper">
+                <canvas id="myChart"></canvas>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">賭け金の状況</span>
+              <ul class="category__list">
+                <li class="category__item" id="bet_btn">
+                  <h3 class="category__name">Clear</h3>
+                  <a id="bet_clear" href="#" class="category__details"> </a>
+                </li>
+                <li class="category__item" id="bet_btn">
+                  <h3 class="category__name">Fail</h3>
+                  <a id="bet_fail" href="#" class="category__details"> </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="button">
+            <input id="update" type="submit" value="更新" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="bet_modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal__content">
+        <span class="close">&times;</span>
+        <h2>いくら賭けますか？</h2>
+        <input type="number" id="kakekin" /><span>RP</span>
+        <div class="button">
+          <input id="bet" type="submit" value="賭ける！" />
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="module" src="./profile_test_kato.js"></script>
+</html>
