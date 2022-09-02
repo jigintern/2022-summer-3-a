@@ -60,7 +60,7 @@ const getUser  = async (uid,targetuid) => {
         gambling:data.gambling,
         isgamble:isgamble,
         lastrun:data.lastrun.toDate(),
-        data:data.betdate.toDate()
+        lastgamble:data.betdate.toDate(),
     };
     return new Response(JSON.stringify(senddata), 
         {
