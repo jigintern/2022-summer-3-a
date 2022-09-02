@@ -127,6 +127,12 @@ body{
     margin-left:  40px;
   }
 
+  .finishImg{
+    width: 210px;
+    margin-top: 20px;
+    margin-left:  40px;
+  }
+
   #samplebutton{
     display: flex;
     flex-direction: column;
@@ -145,7 +151,6 @@ body{
   margin: 90px 40px;
   border-radius: 200px;
   font-size:12px;
-  /* line-height: 280px; */
   text-align: center;
   cursor: pointer;
   font-size: 70px;
