@@ -17,7 +17,7 @@ const liquidate  = async (uid) => {
         const targetRef = doc(db,"users",gamble.uid)
         const targetDoc = await getDoc(targetRef)
         const target = targetDoc.data()
-        if(!(betdate in target.runninglog) && gamble.betting){
+        if(!(betdate in target.runninglog) && !gamble.betting){
             pl += gamble.wager * 1.9;
             return {
                 name:target.name,
