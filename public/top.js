@@ -12,12 +12,12 @@ class SampleButton {
             //クラスの追加
             this.classList.add('sampleButton-ng');
             //テキストの書き換え
-            this.textContent = "FINISH!";
+            this.innerHTML = "<img class='runImg' src='./img/sleep.png'>FINISH!";
         } else {
             //クラスの削除
             this.classList.remove('sampleButton-ng');
             //テキストの書き換え
-            this.textContent = "RUN!";
+            this.innerHTML = "<img class='runImg' src='./img/run.png'>RUN!";
         }
     }
 }

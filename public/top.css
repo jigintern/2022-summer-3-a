@@ -116,12 +116,22 @@ body{
     border-radius: 200px;
     color: #fff;
     font-size:12px;
-    line-height: 280px;
+    /* line-height: 280px; */
     text-align: center;
     cursor: pointer;
-    font-size: 90px;
+    font-size: 70px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+  .runImg{
+    width: 210px;
+    margin-left:  40px;
+  }
+
+  #samplebutton{
+    display: flex;
+    flex-direction: column;
+  }
+
 
 /* OKの時のマウスオーバー */
 .sampleButton-ok:hover {
@@ -135,10 +145,10 @@ body{
   margin: 90px 40px;
   border-radius: 200px;
   font-size:12px;
-  line-height: 280px;
+  /* line-height: 280px; */
   text-align: center;
   cursor: pointer;
-  font-size: 90px;
+  font-size: 70px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-color: #fff;
   border: solid 1px #3553ff;
@@ -157,14 +167,15 @@ body{
 h1{
   margin-top:1rem;
 }
+
 #mapcontainer{
   margin: auto;
   margin-top:10px;
   text-align: center;
   width:90%;
   padding-top:90%;
-  max-height: none;
 }
+
 #previousDistance{
   margin:5px;
 }
