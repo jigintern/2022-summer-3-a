@@ -182,6 +182,7 @@ function reset() {
     // タイマーラベルをリセット
     timerLabel.innerHTML = '00:00:00';
 }
+
 function success(position)
 {
     console.log("位置情報が取得できます")
@@ -190,6 +191,7 @@ function fail(error)
 {
     alert(`位置情報が取得できません<br>エラーコード：${error.code}`);
 }
+
 window.onload = async (event) => {
     navigator.geolocation.getCurrentPosition(success,fail);
     map.setView([35.943306, 136.200500], 12);
