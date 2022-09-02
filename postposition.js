@@ -101,7 +101,14 @@ const postPosition  = async(req) => {
             cleardist = 7000;
         }
         
-        if(distance >= cleardist) data.runninglog[datekey].cleared = true;
+        if(distance >= cleardist) 
+        {
+            if(!data.runninglog[datekey].cleared)
+            {
+                data.runninglog[datekey].cleared = true;
+                data.rp +=100;
+            }
+        }
         else data.runninglog[datekey].cleared = false;
         
         if(data.runninglog[pastdatekey] != null && !donetoday)
