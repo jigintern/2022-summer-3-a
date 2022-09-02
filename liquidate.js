@@ -17,7 +17,7 @@ const liquidate  = async (uid) => {
         const targetRef = doc(db,"users",gamble.uid)
         const targetDoc = await getDoc(targetRef)
         const target = targetDoc.data()
-        if(!betdate in target.runninglog){
+        if(!(betdate in target.runninglog)){
             return {
                 name:target.name,
                 bet:gamble.betting,
@@ -25,7 +25,7 @@ const liquidate  = async (uid) => {
                 fluctuation:-gamble.wager
             }
         }
-        if(target.runninglog[betdate]["cleared"] === gamble.betting){
+        else if(target.runninglog[betdate]["cleared"] === gamble.betting){
             pl += gamble.wager * 1.9;
             return {
                 name:target.name,
