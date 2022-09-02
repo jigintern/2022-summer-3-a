@@ -47,9 +47,9 @@ onAuthStateChanged(auth, async (user) => {
     user_birthday.value = jsondata.birthday.split("T")[0];
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
-    auth.currentUser.level == 1
+    jsondata.level == 1
       ? (total = 3000)
-      : auth.currentUser.level == 2
+      : jsondata.level == 2
       ? (total = 5000)
       : (total = 7000);
     // 円グラフ
