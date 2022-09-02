@@ -182,14 +182,6 @@ function reset() {
     // タイマーラベルをリセット
     timerLabel.innerHTML = '00:00:00';
 }
-function success(pos){
-    window.alert('位置情報の取得に成功しました')
-}
-   
-function fail(error){
-    window.alert('位置情報の取得に失敗しました。エラーコード：' + error.code)
-}
-   
 window.onload = async (event) => {
     map.setView([35.943306, 136.200500], 12);
     L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
