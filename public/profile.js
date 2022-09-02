@@ -54,7 +54,9 @@ onAuthStateChanged(auth, async (user) => {
     // 円グラフ
     let canvas = document.getElementById("myChart");
     let ctx = canvas.getContext("2d");
-    let perc = (4000 / total) * 100;
+
+    let perc = (jsondata.todaysrunning / total) * 100;
+
     let rounded = perc.toFixed(2);
     const config = {
       type: "doughnut",
@@ -72,8 +74,8 @@ onAuthStateChanged(auth, async (user) => {
           animateScale: true,
           animateRotate: true,
           onComplete: function () {
-            var cx = canvas.width / 4;
-            var cy = canvas.height / 4;
+            var cx = canvas.width / 6;
+            var cy = canvas.height / 6;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.font = "16px verdana";
