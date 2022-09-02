@@ -38,7 +38,7 @@ const betUser  = async (data) => {
         uid:data.targetid,
         wager:data.wager
     })
-    user["gambling"]["betdate"] = today
+    user["betdate"] = today
     const lastbet = new Date(target["betrp"]["lastbet"].toDate() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
     const lastbetdate = lastbet.getFullYear() + "/" +  (lastbet.getMonth() + 1) + "/"+ lastbet.getDate();
     if(todate !== lastbetdate){
