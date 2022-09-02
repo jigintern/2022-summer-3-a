@@ -24,18 +24,18 @@ const betFail = document.getElementById("bet_fail");
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const uid = user.uid;
-    console.log(user.uid);
-
-    const path = `/user?uid=${uid}&targetuid=${uid}`;
+    let targetuid = getParam("targetid");
+    if (targetuid == null) {
+      targetuid = uid;
+    }
+    const path = `/user?uid=${uid}&targetuid=${targetuid}`;
     const res = await fetch(path, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
-    console.log(jsondata);
     user_name.placeholder = jsondata.name;
-    level.value = jsondata.level;
-    // console.log(jsondata.birthday.toDate());
+    user_level.value = jsondata.level;
     user_birthday.value = toDateTime(jsondata.birthday.seconds);
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
@@ -68,21 +68,15 @@ var span = document.getElementsByClassName("close")[0];
 betClear.onclick = function () {
   modal.style.display = "block";
   betting = true;
-  console.log(betting);
 };
 betFail.onclick = function () {
   modal.style.display = "block";
   betting = false;
-  console.log(betting);
 };
 
 bet.onclick = async function () {
   let wager = document.getElementById("wager").value;
   let targetuid = getParam("targetid");
-  console.log(wager);
-  console.log(betting);
-  console.log(auth.currentUser.uid);
-  console.log(targetuid);
   const response = await fetch("/bet", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
