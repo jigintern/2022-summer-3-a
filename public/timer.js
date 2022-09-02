@@ -189,6 +189,7 @@ window.onload = async (event) => {
     }).addTo(map);
     L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    navigator.geolocation.getCurrentPosition(success,fail);
     let pos_data = await getCurrentPosition();
     lat = pos_data.coords.latitude;
     lng = pos_data.coords.longitude;
