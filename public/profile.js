@@ -40,6 +40,7 @@ onAuthStateChanged(auth, async (user) => {
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
+    console.log(jsondata);
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
     user_rp.value = jsondata.rp;
@@ -74,8 +75,8 @@ onAuthStateChanged(auth, async (user) => {
           animateScale: true,
           animateRotate: true,
           onComplete: function () {
-            var cx = canvas.width / 6;
-            var cy = canvas.height / 6;
+            var cx = canvas.width / 4;
+            var cy = canvas.height / 4;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.font = "16px verdana";
