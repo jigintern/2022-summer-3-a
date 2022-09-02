@@ -19,10 +19,13 @@ const auth = getAuth();
 const user_name = document.getElementById("name");
 const user_birthday = document.getElementById("birthday");
 const user_level = document.getElementById("level");
+const user_rp = document.getElementById("rp");
 const betClear = document.getElementById("bet_clear");
 const betFail = document.getElementById("bet_fail");
+const btn_seisan = document.getElementById("liquidation");
 onAuthStateChanged(auth, async (user) => {
   if (user) {
+    // console.log(user);
     const uid = user.uid;
     let targetuid = getParam("targetid");
     if (targetuid == null) {
@@ -34,9 +37,11 @@ onAuthStateChanged(auth, async (user) => {
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
+    console.log(jsondata);
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
-    user_birthday.value = toDateTime(jsondata.birthday.seconds);
+    user_rp.value = jsondata.rp;
+    user_birthday.value = jsondata.birthday;
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
   } else {
@@ -44,12 +49,6 @@ onAuthStateChanged(auth, async (user) => {
     console.log("User is signed out");
   }
 });
-function toDateTime(secs) {
-  var t = new Date(1970, 0, 1); // Epoch
-  t.setSeconds(secs);
-  return t;
-}
-
 // Get the modal
 var modal = document.getElementById("bet_modal");
 
@@ -62,7 +61,16 @@ var betting;
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// Get bet value
+btn_seisan.onclick = async function () {
+  const path = `/liquidation?uid=${auth.currentUser.uid}`;
+  const res = await fetch(path, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+  let jsondata = await res.json();
+  console.log(jsondata);
+  alert("合計の損益は:" + jsondata.pl + "です");
+};
 
 // When the user clicks on the button, open the modal
 betClear.onclick = function () {
@@ -120,11 +128,13 @@ window.onclick = function (event) {
 let editBtn = document.getElementById("edit");
 let username = document.getElementById("name");
 let level = document.getElementById("level");
+let rp = document.getElementById("rp");
 let birthday = document.getElementById("birthday");
 editBtn.addEventListener("click", edit);
 username.disabled = true;
 level.disabled = true;
 birthday.disabled = true;
+rp.disabled = true;
 function edit() {
   var updateBtn = document.getElementById("update");
   if (updateBtn.style.display === "none") {
