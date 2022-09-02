@@ -23,9 +23,12 @@ const user_rp = document.getElementById("rp");
 const betClear = document.getElementById("bet_clear");
 const betFail = document.getElementById("bet_fail");
 const btn_seisan = document.getElementById("liquidation");
+let total = 0;
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    // console.log(user);
+  if (!user) {
+    // User is signed out
+    console.log("User is signed out");
+  } else {
     const uid = user.uid;
     let targetuid = getParam("targetid");
     if (targetuid == null) {
@@ -37,16 +40,53 @@ onAuthStateChanged(auth, async (user) => {
       headers: { "Content-Type": "application/json" },
     });
     let jsondata = await res.json();
-    console.log(jsondata);
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
     user_rp.value = jsondata.rp;
-    user_birthday.value = jsondata.birthday;
+    user_birthday.value = jsondata.birthday.split("T")[0];
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
-  } else {
-    // User is signed out
-    console.log("User is signed out");
+    auth.currentUser.level == 1
+      ? (total = 3000)
+      : auth.currentUser.level == 2
+      ? (total = 5000)
+      : (total = 7000);
+    // 円グラフ
+    let canvas = document.getElementById("myChart");
+    let ctx = canvas.getContext("2d");
+
+    let perc = (jsondata.todaysrunning / total) * 100;
+
+    let rounded = perc.toFixed(2);
+    const config = {
+      type: "doughnut",
+      data: {
+        datasets: [
+          {
+            data: [rounded, 100 - rounded],
+            backgroundColor: ["#9b59b6", "#889d9e"],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          animateRotate: true,
+          onComplete: function () {
+            var cx = canvas.width / 6;
+            var cy = canvas.height / 6;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "16px verdana";
+            ctx.fillStyle = "black";
+            ctx.fillText(rounded + "%", cx, cy);
+          },
+        },
+      },
+    };
+
+    new Chart(ctx, config);
   }
 });
 // Get the modal
@@ -95,6 +135,11 @@ bet.onclick = async function () {
       wager: Number(wager),
     }),
   });
+  if (response.status === 200) {
+    alert("賭けました！");
+    document.getElementById("wager").value = "";
+    modal.style.display = "none";
+  }
   if (response.status === 400) {
     alert(await response.text());
     return;
@@ -113,73 +158,35 @@ function getParam(name, url) {
 }
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
-  document.getElementById("wagger").value = "";
+  document.getElementById("wager").value = "";
   modal.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
-    document.getElementById("wagger").value = "";
+    document.getElementById("wager").value = "";
     modal.style.display = "none";
   }
 };
 
 let editBtn = document.getElementById("edit");
-let username = document.getElementById("name");
-let level = document.getElementById("level");
-let rp = document.getElementById("rp");
-let birthday = document.getElementById("birthday");
 editBtn.addEventListener("click", edit);
-username.disabled = true;
-level.disabled = true;
-birthday.disabled = true;
-rp.disabled = true;
+user_name.disabled = true;
+user_level.disabled = true;
+user_birthday.disabled = true;
+user_rp.disabled = true;
 function edit() {
   var updateBtn = document.getElementById("update");
   if (updateBtn.style.display === "none") {
     updateBtn.style.display = "block";
-    username.disabled = false;
+    user_name.disabled = false;
     level.disabled = false;
-    birthday.disabled = false;
+    user_birthday.disabled = false;
   } else {
     updateBtn.style.display = "none";
-    username.disabled = true;
+    user_name.disabled = true;
     level.disabled = true;
-    birthday.disabled = true;
+    user_birthday.disabled = true;
   }
 }
-// 円グラフ
-let canvas = document.getElementById("myChart");
-let ctx = canvas.getContext("2d");
-let perc = 25;
-
-const config = {
-  type: "doughnut",
-  data: {
-    datasets: [
-      {
-        data: [perc, 100 - perc],
-        backgroundColor: ["#9b59b6", "#889d9e"],
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true,
-      onComplete: function () {
-        var cx = canvas.width / 2;
-        var cy = canvas.height / 2;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.font = "16px verdana";
-        ctx.fillStyle = "black";
-        ctx.fillText(perc + "%", cx, cy);
-      },
-    },
-  },
-};
-
-new Chart(ctx, config);
