@@ -182,14 +182,24 @@ function reset() {
     // タイマーラベルをリセット
     timerLabel.innerHTML = '00:00:00';
 }
+
+function success(position)
+{
+    console.log("位置情報が取得できます")
+}
+function fail(error)
+{
+    alert(`位置情報が取得できません<br>エラーコード：${error.code}`);
+}
+
 window.onload = async (event) => {
+    navigator.geolocation.getCurrentPosition(success,fail);
     map.setView([35.943306, 136.200500], 12);
     L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
         attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
     }).addTo(map);
     L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
-    navigator.geolocation.getCurrentPosition(success,fail);
     let pos_data = await getCurrentPosition();
     lat = pos_data.coords.latitude;
     lng = pos_data.coords.longitude;
