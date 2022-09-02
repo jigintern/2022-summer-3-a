@@ -33,7 +33,6 @@ if (logout !== null) {
 async function GoogleLogin() {
   signInWithPopup(auth, provider)
     .then((result) => {
-      console.log(result.user.uid)
       fetch(`/exists?uid=${result.user.uid}`)
         .then(res => res.json())
         .then(data => {
