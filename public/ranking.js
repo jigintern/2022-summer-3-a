@@ -34,9 +34,10 @@ onAuthStateChanged(auth, (user) => {
     };
   }
   else {
-    console.log("not login");
+    window.location.href('index.html');
   }
 })
+
 const getCurrentPosition = (options) => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, options)
@@ -48,15 +49,15 @@ async function ChangeRanking(selectTerm, selectLevel, uid) {
   while (node.firstChild) {
     node.removeChild(node.firstChild);
   }
-    //セレクタによる場合分け
-    //レベルごと
-    const LevelSelect = document.form1.LevelSelect;
-    const level_num = LevelSelect.selectedIndex;
+  //セレクタによる場合分け
+  //レベルごと
+  const LevelSelect = document.form1.LevelSelect;
+  const level_num = LevelSelect.selectedIndex;
 
-    //期間ごと
-    const term = document.form1.term;
-    const term_num = term.selectedIndex;
-    const term_value = term.options[term_num].value;
+  //期間ごと
+  const term = document.form1.term;
+  const term_num = term.selectedIndex;
+  const term_value = term.options[term_num].value;
 
   // jsonの受け取り
   const path = `/users?key=${selectTerm.value}&uid=${uid}&level=${selectLevel.value}`
@@ -103,8 +104,9 @@ async function ChangeRanking(selectTerm, selectLevel, uid) {
     RankingContainer.appendChild(UserStatus);
 
     //p class=Unameの作成
-    let Uname = document.createElement('p');
+    let Uname = document.createElement('a');
     Uname.className = `Uname${i}`;
+    Uname.href = `/profile.html?targetuid=${element.uid}`
     UserStatus.appendChild(Uname);
 
     //div class=UserAchievementの作成
