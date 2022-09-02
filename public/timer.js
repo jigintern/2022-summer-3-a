@@ -62,15 +62,15 @@ async function start() {
             })
         });
         const user_distance = await response.json();
-        
+
         para.innerText = `走行距離：${Math.floor(user_distance.distance)}m`;
     }
-    else if (time % 3000 < 5) {
+    else if (time % 1000 < 5) {
         let pos_data = await getCurrentPosition();
         lat = pos_data.coords.latitude;
         lng = pos_data.coords.longitude;
         var gettedTime = Math.floor((performance.now()-startTime)/10)/100;
-        
+
         const response = await fetch("/position", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -97,7 +97,7 @@ async function start() {
         L.polyline(lines, { color: 'blue', weight: 5 }).addTo(map);
 
         const para = document.querySelector("#previousDistance");
-        
+
         para.innerText = `走行距離：${displaydis}m`;
     }
     //timeは10msec単位で、performance.now()は1msec単位になっている
@@ -156,16 +156,16 @@ async function stop() {
 }
 
 function click() {
-    if (running) { running = false; stop() } else { 
-        running = true; 
+    if (running) { running = false; stop() } else {
+        running = true;
         start();
-        startTime = performance.now(); 
+        startTime = performance.now();
         time = 0;
         map.remove();
         map = L.map('mapcontainer', { zoomControl: false });
         map.setView([lat, lng], 16);
-        L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
-            attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
+        L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+            attribution: "<a href='https://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
         }).addTo(map);
         L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
@@ -182,13 +182,24 @@ function reset() {
     // タイマーラベルをリセット
     timerLabel.innerHTML = '00:00:00';
 }
+
+function success(position)
+{
+    console.log("位置情報が取得できます")
+}
+function fail(error)
+{
+    alert(`位置情報が取得できません\nエラーコード：${error.code}`);
+}
+
 window.onload = async (event) => {
     map.setView([35.943306, 136.200500], 12);
-    L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
-        attribution: "<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors" 
+    L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+        attribution: "<a href='https://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
     }).addTo(map);
     L.control.scale({ maxWidth: 20, position: 'bottomright', imperial: false }).addTo(map);
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
+    navigator.geolocation.getCurrentPosition(success,fail);
     let pos_data = await getCurrentPosition();
     lat = pos_data.coords.latitude;
     lng = pos_data.coords.longitude;

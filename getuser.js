@@ -43,9 +43,9 @@ const getUser  = async (uid,targetuid) => {
     date = ("0" + date).slice(-2);     
     const datekey = year + "-" + month + "-" + date;
     var todaysrunning = 0;
-    if(myRes.data().runninglog[datekey]!=null)
+    if(targetRes.data().runninglog[datekey]!=null)
     {
-        todaysrunning = myRes.data().runninglog[datekey].distance;
+        todaysrunning = targetRes.data().runninglog[datekey].distance;
     }
 
     data.betrp.lastbet = data.betrp.lastbet.toDate()
