@@ -22,6 +22,7 @@ const user_level = document.getElementById("level");
 const user_rp = document.getElementById("rp");
 const betClear = document.getElementById("bet_clear");
 const betFail = document.getElementById("bet_fail");
+const btn_seisan = document.getElementById("liquidation");
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // console.log(user);
@@ -40,7 +41,6 @@ onAuthStateChanged(auth, async (user) => {
     user_name.placeholder = jsondata.name;
     user_level.value = jsondata.level;
     user_rp.value = jsondata.rp;
-    // console.log(sampleDate(jsondata.birthday, "YYYY-MM-YY"));
     user_birthday.value = jsondata.birthday;
     betClear.innerText = jsondata.betrp.clear;
     betFail.innerText = jsondata.betrp.fail;
@@ -61,7 +61,16 @@ var betting;
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// Get bet value
+btn_seisan.onclick = async function () {
+  const path = `/liquidation?uid=${auth.currentUser.uid}`;
+  const res = await fetch(path, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+  let jsondata = await res.json();
+  console.log(jsondata);
+  alert("合計の損益は:" + jsondata.pl + "です");
+};
 
 // When the user clicks on the button, open the modal
 betClear.onclick = function () {
