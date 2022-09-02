@@ -114,9 +114,7 @@ body{
     background-color: #5E72E4;
     border: solid 1px #2639a7;
     border-radius: 200px;
-    color: #fff;
     font-size:12px;
-    /* line-height: 280px; */
     text-align: center;
     cursor: pointer;
     font-size: 70px;
@@ -138,14 +136,8 @@ body{
     flex-direction: column;
   }
 
-
-/* OKの時のマウスオーバー */
-.sampleButton-ok:hover {
-    background-color: #5E72E4;
-}
-
 /* NGの時の基本スタイル*/
-.sampleButton-ng {
+.sampleButton-ng.sampleButton-ok {
   width: 300px;
   height: 300px;
   margin: 90px 40px;
@@ -155,14 +147,9 @@ body{
   cursor: pointer;
   font-size: 70px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background-color: #fff;
   border: solid 1px #3553ff;
+  background-color: #F5365C;
   color: black;
-}
-
-/* NGの時のマウスオーバー */
-.sampleButton-ng:hover{
-    background-color: #F5365C;
 }
 
 .running_states{
