@@ -21,6 +21,13 @@ const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    fetch(`/exists?uid=${user.uid}`)
+        .then(res => res.json())
+        .then(data => {
+          if(!data.exists){
+            window.location.href = "register.html";
+          }
+        })
     const selectTerm = document.querySelector('[name="term"]');
     const selectLevel = document.querySelector('[name="LevelSelect"]');
     ChangeRanking(selectTerm, selectLevel, user.uid);

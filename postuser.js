@@ -12,7 +12,7 @@ const postUser  = async (data) => {
     if(userDoc.exists()){
         const user = userDoc.data()
         user.name = data.name
-        user.level = user.level
+        user.level = data.level
         setDoc(userRef,user)
     }
     else{
