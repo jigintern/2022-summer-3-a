@@ -12,8 +12,13 @@
             <input type="text" id="name" required>
             <p>誕生日</p>
             <input type="date" id="birthday" required>
-            <p>レベル（1〜3）</p>
-            <input type="number" name ="level" id="level" required>
+            <p>レベル</p>
+            <select name="level" id="level" required>
+                <option selected hidden>---</option>
+                <option value=1>初級</option>
+                <option value=2>中級</option>
+                <option value=3>上級</option>
+            </select>
             <p>送信</p>
             <input type="submit" name="submit" id="submit" required>
         </form>

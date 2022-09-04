@@ -204,10 +204,8 @@ window.onload = async (event) => {
     lat = pos_data.coords.latitude;
     lng = pos_data.coords.longitude;
     map.setView([lat, lng], 16);
-  };
+};
 
 // クリックした時の処理
 button.addEventListener('click', click)
 resetBtn.addEventListener('click', reset); // RESETボタン
-
-

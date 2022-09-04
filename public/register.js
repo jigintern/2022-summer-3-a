@@ -27,12 +27,15 @@ onAuthStateChanged(auth, async (user) => {
 document.querySelector("#profileform").addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    var level = Number(document.querySelector("#level").value);
-    if(level < 1)level = 1;
-    else if(level > 3)level = 3;
+    const level = Number(document.querySelector("#level").value);
 
-    var date = new Date(document.querySelector("#birthday").value);
-
+    const date = new Date(document.querySelector("#birthday").value);
+    console.log({
+        uid:uid,
+        name:document.querySelector("#name").value,
+        level:level,
+        birthday:date
+    })
     const res = await fetch("/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
