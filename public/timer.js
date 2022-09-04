@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import {
-  getAuth,
+    getAuth,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
 import L from "https://code4sabae.github.io/leaflet-mjs/leaflet.mjs";
 import { LeafletSprite } from "https://taisukef.github.io/leaflet.sprite-es/src/sprite.js";
@@ -9,13 +10,13 @@ LeafletSprite.init(L);
 var map = L.map('mapcontainer', { zoomControl: false });
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
-  authDomain: "running-ranking.firebaseapp.com",
-  projectId: "running-ranking",
-  storageBucket: "running-ranking.appspot.com",
-  messagingSenderId: "660141883268",
-  appId: "1:660141883268:web:fb085fe07d779f859da7d1",
-  measurementId: "G-MQ2CVEQL0X",
+    apiKey: "AIzaSyC0OgKnDqQYYpC1CWowjO0korvax2bFpOE",
+    authDomain: "running-ranking.firebaseapp.com",
+    projectId: "running-ranking",
+    storageBucket: "running-ranking.appspot.com",
+    messagingSenderId: "660141883268",
+    appId: "1:660141883268:web:fb085fe07d779f859da7d1",
+    measurementId: "G-MQ2CVEQL0X",
 };
 
 // Initialize Firebase
@@ -23,9 +24,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const getCurrentPosition = (options) => {
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options)
+        navigator.geolocation.getCurrentPosition(resolve, reject, options)
     })
-  }
+}
 var startTime = 0;
 
 var time = 0;
@@ -38,6 +39,20 @@ var running = false;
 var lat = 0;
 var lng = 0;
 
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // User is signed out
+        window.location.href = "index.html"
+    } else {
+        fetch(`/exists?uid=${user.uid}`)
+        .then(res => res.json())
+        .then(data => {
+            if(!data.exists){
+                window.location.href = "register.html";
+            }
+        })
+    }
+})
 // STARTボタン
 async function start() {
     if (time == 0) {
