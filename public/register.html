@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <form id="profileform">
+            <p>名前</p>
+            <input type="text" id="name" required>
+            <p>誕生日</p>
+            <input type="date" id="birthday" required>
+            <p>レベル</p>
+            <select name="level" id="level" required>
+                <option selected hidden>---</option>
+                <option value=1>初級</option>
+                <option value=2>中級</option>
+                <option value=3>上級</option>
+            </select>
+            <p>送信</p>
+            <input type="submit" name="submit" id="submit" required>
+        </form>
+    <script type="module" src="./register.js">
+    </script>
+</body>
+</html>
