@@ -30,10 +30,19 @@ if (login !== null) {
 if (logout !== null) {
   logout.addEventListener("click", GoogleSignOut);
 }
-function GoogleLogin() {
+async function GoogleLogin() {
   signInWithPopup(auth, provider)
     .then((result) => {
-      window.location.href = "top.html";
+      fetch(`/exists?uid=${result.user.uid}`)
+        .then(res => res.json())
+        .then(data => {
+          if(data.exists){
+            window.location.href = "top.html";
+          }
+          else{
+            window.location.href = "register.html"
+          }
+        })
     })
     .catch((error) => {
       // Handle Errors here.
