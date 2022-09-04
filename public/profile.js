@@ -27,8 +27,15 @@ let total = 0;
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     // User is signed out
-    console.log("User is signed out");
+    window.location.href = "index.html"
   } else {
+    fetch(`/exists?uid=${user.uid}`)
+        .then(res => res.json())
+        .then(data => {
+          if(!data.exists){
+            window.location.href = "register.html";
+          }
+        })
     const uid = user.uid;
     let targetuid = getParam("targetid");
     if (targetuid == null) {

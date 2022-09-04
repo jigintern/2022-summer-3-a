@@ -24,6 +24,19 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider(app);
 const login = document.getElementById("login");
 const logout = document.getElementById("logout");
+onAuthStateChanged(auth, async (user) => {
+  if(user){
+      fetch(`/exists?uid=${user.uid}`)
+      .then(res => res.json())
+      .then(data => {
+          if(!data.exists){
+              window.location.href = "register.html";
+          }else{
+            window.location.href = "top.html"
+          }
+      })
+  }
+})
 if (login !== null) {
   login.addEventListener("click", GoogleLogin);
 }
